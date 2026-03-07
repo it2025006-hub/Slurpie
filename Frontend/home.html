@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slurpie | Share Food, Spread Love</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="dark.css">
+</head>
+
+<body>
+
+<!-- =========================
+     TOP RIGHT CONTROLS
+========================= -->
+<div class="top-right">
+  <button class="night-btn" onclick="toggleNight()">🌙</button>
+
+  <div class="account" onclick="toggleAccount()">
+    <span class="avatar">👤</span>
+    <span id="accountEmail">Account</span>
+
+    <div id="accountMenu" class="account-menu">
+      <p><strong>Email:</strong><br><span id="userEmail">Not logged in</span></p>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- Background -->
+<div class="bg-pattern"></div>
+
+<!-- Main Layout -->
+<div class="page">
+
+  <!-- Left -->
+  <div class="left">
+    <h1 class="logo">🍞 SLURPIE</h1>
+    <p class="tagline">Good Food Deserves a Second Chance.</p>
+
+    <h2 class="headline">
+      Hey there! 👋<br>
+      Glad you’re here
+    </h2>
+
+    <p class="description">
+      Welcome to <strong>Slurpie</strong> — a place where surplus food
+      finds happy homes 🏡 and kindness is shared one meal at a time.
+    </p>
+
+    <p class="question">How would you like to use Slurpie?</p>
+
+    <div class="buttons">
+      <div class="action" onclick="window.location.href='add-food.html'">
+        <span class="emoji">🥗</span>
+        <div>
+          <h3>I have surplus food</h3>
+          <p>Share it instead of wasting it</p>
+        </div>
+        <span class="arrow">➜</span>
+      </div>
+
+      <div class="action" onclick="window.location.href='available-foods.html'">
+        <span class="emoji">🛍️</span>
+        <div>
+          <h3>I’m looking for food</h3>
+          <p>Find fresh surplus near you</p>
+        </div>
+        <span class="arrow">➜</span>
+      </div>
+    </div>
+
+    <footer>🤍 Together, let’s reduce food waste.</footer>
+  </div>
+
+  <!-- Right -->
+  <div class="right">
+    <div class="illustration">
+      🍞 🧁 🥪 🥛 🍪 🍰 🌮 🍕 🍣
+    </div>
+    <p class="illus-text">Saving food. Sharing smiles 😊</p>
+  </div>
+
+</div>
+
+<!-- =========================
+     RANDOM BUTTON COLORS
+========================= -->
+<script>
+const shades = [
+  "#E8F5E9","#DFF5EA","#C8E6C9","#B7E4C7",
+  "#E3F2FD","#E0F7FA","#CAF0F8","#E7F5FF"
+];
+
+document.querySelectorAll('.action').forEach(btn => {
+  btn.style.background = shades[Math.floor(Math.random() * shades.length)];
+});
+</script>
+
+<!-- =========================
+     ACCOUNT + DARK MODE
+========================= -->
+<script>
+/* Load user email */
+const email = localStorage.getItem("email");
+if (email) {
+  document.getElementById("accountEmail").textContent = email.split("@")[0];
+  document.getElementById("userEmail").textContent = email;
+}
+
+/* Toggle account menu */
+function toggleAccount() {
+  const menu = document.getElementById("accountMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* Logout */
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+
+/* Dark mode sync */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+
+function toggleNight() {
+  const isDark = document.body.classList.toggle("dark");
+  localStorage.setItem("nightMode", isDark);
+}
+</script>
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+
+<!-- AI CHATBOX -->
+<div id="aiChat" class="ai-chatbox">
+  <div class="ai-header">
+    🤍 Slurpie Assistant
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
+    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+<script>
+function toggleChat() {
+  const chat = document.getElementById("aiChat");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById("aiMessages");
+
+  // User message
+  const userDiv = document.createElement("div");
+  userDiv.className = "ai-user";
+  userDiv.textContent = msg;
+  messages.appendChild(userDiv);
+
+  input.value = "";
+
+  // Fake AI response (for now)
+  setTimeout(() => {
+    const botDiv = document.createElement("div");
+    botDiv.className = "ai-bot";
+    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
+    messages.appendChild(botDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+</script>
+
+</body>
+</html>

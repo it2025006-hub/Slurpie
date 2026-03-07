@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slurpie | Login & Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="bg-pattern"></div>
+
+  <div class="auth-page">
+
+    <!-- SIGN UP SECTION -->
+    <div class="card signup">
+      <h1>🍰 Join Slurpie</h1>
+      <p class="subtitle">Create an account & spread food love 🤍</p>
+
+      <form onsubmit="redirectToHome(event)">
+
+        <label>👤 Name <span class="mandatory">* </span></label>
+        <input type="text" placeholder="Enter your name" required>
+
+        <label>📞 Phone No. <span class="mandatory">* </span></label>
+        <input type="tel" placeholder="Enter your phone number" required>
+
+        <label>📧 Mail <span class="mandatory">* </span></label>
+        <input type="email" placeholder="Enter your email" required>
+
+        <label>🔒 Password <span class="mandatory">* </span></label>
+        <input type="password" placeholder="Create a password" required>
+
+        <button class="btn signup-btn">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div class="card login">
+      <h1>🍞 Welcome Back</h1>
+      <p class="subtitle">Already part of Slurpie? Log in 😊</p>
+
+      <form onsubmit="redirectToHome(event)">
+
+        <label>📧 Mail <span class="mandatory">* </span></label>
+        <input type="email" placeholder="Enter your email" required>
+
+        <label>🔒 Password <span class="mandatory">* </span></label>
+        <input type="password" placeholder="Enter your password" required>
+
+        <button class="btn login-btn">Login</button>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    function redirectToHome(event) {
+      event.preventDefault();
+      window.location.href = "home.html";
+    }
+  </script>
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+
+<!-- AI CHATBOX -->
+<div id="aiChat" class="ai-chatbox">
+  <div class="ai-header">
+    🤍 Slurpie Assistant
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
+    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+<script>
+function toggleChat() {
+  const chat = document.getElementById("aiChat");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById("aiMessages");
+
+  // User message
+  const userDiv = document.createElement("div");
+  userDiv.className = "ai-user";
+  userDiv.textContent = msg;
+  messages.appendChild(userDiv);
+
+  input.value = "";
+
+  // Fake AI response (for now)
+  setTimeout(() => {
+    const botDiv = document.createElement("div");
+    botDiv.className = "ai-bot";
+    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
+    messages.appendChild(botDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+</script>
+
+</body>
+</html>

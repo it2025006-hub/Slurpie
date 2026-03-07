@@ -1,0 +1,274 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  height:100vh;
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(135deg,#fff3e4,#fde0c0);
+  color:#5a3d2b;
+  overflow:hidden;
+}
+
+/* BACKGROUND */
+.bg-pattern{
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(#e9bb8f 1px,transparent 1px);
+  background-size:52px 52px;
+  opacity:.14;
+  z-index:-1;
+}
+
+/* HEADER */
+header{text-align:center;padding:32px 20px 16px;}
+header h1{font-family:'Fredoka',cursive;font-size:42px;}
+header p{margin-top:6px;color:#7a4f3a;}
+
+/* CART BUTTON */
+.cart-btn{
+  position:fixed;
+  top:20px;
+  right:26px;
+  padding:14px 24px;
+  border-radius:40px;
+  border:none;
+  background:linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color:white;
+  font-family:'Fredoka',cursive;
+  cursor:pointer;
+  box-shadow:0 14px 32px rgba(0,0,0,.25);
+  z-index:9999;
+  transition:.3s;
+}
+.cart-btn:hover{transform:scale(1.05);}
+
+/* FILTER BAR */
+.filter-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  padding:10px 0 20px;
+}
+
+.filter-bar input{
+  width:260px;
+  padding:12px 18px;
+  border-radius:30px;
+  border:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
+/* 🌿 FANCY PURE VEG BUTTON */
+.fancy-veg{
+  padding:12px 26px;
+  border-radius:999px;
+  border:2px solid transparent;
+  background:
+    linear-gradient(#ecfdf5,#ecfdf5) padding-box,
+    linear-gradient(135deg,#2f7a4f,#7be0a3) border-box;
+  color:#1b4332;
+  font-family:'Fredoka',cursive;
+  cursor:pointer;
+  transition:.35s;
+}
+
+.fancy-veg.active{
+  background:
+    linear-gradient(#2f7a4f,#5fbf8f) padding-box,
+    linear-gradient(135deg,#1b4332,#9fffc9) border-box;
+  color:white;
+  box-shadow:0 0 18px rgba(47,122,79,.6);
+}
+
+/* FOOD GRID */
+.food-scroll{
+  height:calc(100vh - 180px);
+  overflow-y:auto;
+  padding:30px 80px 80px;
+}
+
+.food-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:38px;
+}
+
+/* FOOD CARD */
+.food-card{
+  background:rgba(255,255,255,.85);
+  border-radius:30px;
+  padding:28px;
+  box-shadow:0 14px 32px rgba(0,0,0,.12);
+  cursor:pointer;
+  transition:.3s;
+}
+
+.food-card.active{
+  transform:scale(1.05);
+  background:#fff9f1;
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.price{
+  background:#e9f6ec;
+  padding:6px 16px;
+  border-radius:18px;
+  font-weight:600;
+}
+
+.badge{
+  font-size:11px;
+  padding:4px 10px;
+  border-radius:14px;
+  margin-left:6px;
+}
+
+.badge.veg{background:#2f7a4f;color:white;}
+.badge.nonveg{background:#c0392b;color:white;}
+
+.food-card img{
+  width:100%;
+  height:220px;
+  object-fit:contain;
+  background:#f6e7d6;
+  border-radius:24px;
+  margin:18px 0;
+}
+
+.details p{font-size:14px;margin-bottom:6px;color:#6b4a36;}
+
+/* ADD TO CART */
+.cart-add-btn{
+  display:none;
+  width:100%;
+  margin-top:20px;
+  padding:16px;
+  border-radius:24px;
+  border:none;
+  font-family:'Fredoka',cursive;
+  background:linear-gradient(135deg,#ffd6a5,#fff0dc);
+  cursor:pointer;
+  transition:.3s;
+}
+.cart-add-btn:hover{transform:scale(1.04);}
+.food-card.active .cart-add-btn{display:block;}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#2f7a4f;
+  color:white;
+  padding:14px 26px;
+  border-radius:30px;
+  font-family:'Fredoka',cursive;
+  opacity:0;
+  transition:.4s;
+  z-index:9999;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-10px);}
+/* AI CHAT BUTTON */
+.ai-chat-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* CHATBOX */
+.ai-chatbox {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 320px;
+  height: 420px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 22px 55px rgba(0,0,0,0.25);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+}
+
+/* HEADER */
+.ai-header {
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  padding: 14px 18px;
+  font-family: 'Fredoka', cursive;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MESSAGES */
+.ai-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  background: #fff7ec;
+}
+
+.ai-bot,
+.ai-user {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.ai-bot {
+  background: #e9f6ec;
+  align-self: flex-start;
+}
+
+.ai-user {
+  background: #ffd6a5;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+/* INPUT */
+.ai-input {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  border-top: 1px solid #eee;
+}
+
+.ai-input input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+}
+
+.ai-input button {
+  border: none;
+  background: #2f7a4f;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}

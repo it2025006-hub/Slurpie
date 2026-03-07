@@ -1,0 +1,218 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fff3e4, #fde0c0);
+  color: #5a3d2b;
+}
+
+/* BACKGROUND */
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(#e9bb8f 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.14;
+  z-index: -1;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+header h1 {
+  font-family: 'Fredoka', cursive;
+  font-size: 40px;
+}
+
+header p {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #7a4f3a;
+}
+
+/* CART SECTION */
+.cart-section {
+  max-width: 700px;
+  margin: 30px auto 60px;
+  padding: 0 20px;
+}
+
+.cart-items {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.15);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px dashed #e1bfa0;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cart-item button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* EMPTY CART */
+.empty {
+  text-align: center;
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+/* SUMMARY */
+.cart-summary {
+  margin-top: 26px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.cart-summary h2 {
+  font-family: 'Fredoka', cursive;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+/* CHECKOUT BUTTON */
+.checkout-btn {
+  padding: 16px 32px;
+  border-radius: 30px;
+  border: none;
+  font-family: 'Fredoka', cursive;
+  font-size: 16px;
+  background: linear-gradient(135deg, #2f7a4f, #5fbf8f);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+/* AI CHAT BUTTON */
+.ai-chat-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* CHATBOX */
+.ai-chatbox {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 320px;
+  height: 420px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 22px 55px rgba(0,0,0,0.25);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+}
+
+/* HEADER */
+.ai-header {
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  padding: 14px 18px;
+  font-family: 'Fredoka', cursive;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MESSAGES */
+.ai-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  background: #fff7ec;
+}
+
+.ai-bot,
+.ai-user {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.ai-bot {
+  background: #e9f6ec;
+  align-self: flex-start;
+}
+
+.ai-user {
+  background: #ffd6a5;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+/* INPUT */
+.ai-input {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  border-top: 1px solid #eee;
+}
+
+.ai-input input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+}
+
+.ai-input button {
+  border: none;
+  background: #2f7a4f;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+

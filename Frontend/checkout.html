@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout | Slurpie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <link rel="stylesheet" href="checkout.css">
+  <link rel="stylesheet" href="dark.css">
+</head>
+
+<body>
+
+<div class="checkout-wrapper">
+
+  <!-- LEFT COLUMN -->
+  <div class="checkout-left">
+    <h1>🧾 Checkout(Delivery)</h1>
+    <p class="subtitle">Confirm your order & delivery address</p>
+
+    <!-- PRICE BOX -->
+    <div class="food-box">
+      <div id="foodName" class="food-name">Your Cart Items</div>
+
+      <div class="row">Base Price <span>₹ <span id="basePrice">0</span></span></div>
+      <div class="row">Delivery Charge <span>₹ 20</span></div>
+      <div class="row">Platform Fee <span>₹ 6.70</span></div>
+
+      <hr>
+
+      <div class="row total">
+        Subtotal <span>₹ <span id="totalPrice">0</span></span>
+      </div>
+    </div>
+
+    <div class="popup">🎉 NO SURGE FEES FOR YOU!</div>
+
+    <!-- MANUAL ADDRESS -->
+    <div class="manual-address">
+      <h3>✍️ Enter Address Manually</h3>
+      <textarea
+        id="manualAddress"
+        placeholder="House no, Street, Area, City, Pincode (Required if not using live location)">
+      </textarea>
+    </div>
+
+    <!-- ORDER BUTTON -->
+    <button class="order-btn" onclick="placeOrder()">🚚 ORDER FOOD</button>
+
+    <div class="back" onclick="goBack()">← Back to foods</div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="checkout-right">
+    <div class="location-box">
+      <h3>📍 Choose Delivery Location</h3>
+
+      <button class="location-btn" onclick="getLiveLocation()">
+        Use My Live Location
+      </button>
+
+      <textarea id="autoAddress" readonly>
+Address will appear here...
+      </textarea>
+
+      <div id="map"></div>
+
+      <p class="hint">📌 You can drag the marker to change delivery location</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* ===============================
+   CART & PRICING
+================================ */
+const DELIVERY_CHARGE = 20;
+const PLATFORM_FEE = 6.70;
+
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+if (cart.length === 0) {
+  alert("Your cart is empty!");
+  window.location.href = "available-food.html";
+}
+
+let basePrice = 0;
+let foodNames = [];
+
+cart.forEach(item => {
+  basePrice += item.price;
+  foodNames.push(item.name);
+});
+
+document.getElementById("foodName").textContent = foodNames.join(", ");
+document.getElementById("basePrice").textContent = basePrice.toFixed(2);
+
+const total = basePrice + DELIVERY_CHARGE + PLATFORM_FEE;
+document.getElementById("totalPrice").textContent = total.toFixed(2);
+
+/* ===============================
+   PLACE ORDER (MANDATORY ADDRESS)
+================================ */
+function placeOrder() {
+  const manualAddress = document.getElementById("manualAddress").value.trim();
+  const autoAddress = document.getElementById("autoAddress").value.trim();
+
+  const autoEmpty =
+    autoAddress === "" ||
+    autoAddress === "Address will appear here...";
+
+  if (manualAddress === "" && autoEmpty) {
+    alert("📍 Please provide a delivery address (Live or Manual).");
+    return;
+  }
+
+  window.location.href = "delivering.html";
+}
+
+function goBack() {
+  window.location.href = "available-food.html";
+}
+
+/* ===============================
+   MAP + LIVE LOCATION
+================================ */
+let map, marker;
+
+function initMap(lat, lng) {
+  map = L.map('map').setView([lat, lng], 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+  marker.on('dragend', () => {
+    const pos = marker.getLatLng();
+    reverseGeocode(pos.lat, pos.lng);
+  });
+}
+
+function getLiveLocation() {
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      if (!map) {
+        initMap(lat, lng);
+      } else {
+        map.setView([lat, lng], 15);
+        marker.setLatLng([lat, lng]);
+      }
+
+      reverseGeocode(lat, lng);
+    },
+    () => alert("Unable to fetch live location")
+  );
+}
+
+function reverseGeocode(lat, lng) {
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("autoAddress").value =
+        data.display_name || "Address not found";
+    })
+    .catch(() => {
+      document.getElementById("autoAddress").value =
+        "Unable to fetch address";
+    });
+}
+
+/* ===============================
+   DARK MODE FOLLOWER
+================================ */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+
+</body>
+</html>

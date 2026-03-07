@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* BACKGROUND */
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(#cde7d8 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.18;
+  z-index: -1;
+}
+
+/* WRAPPER */
+.pickup-wrapper {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
+  width: 1100px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 36px;
+  padding: 50px;
+  box-shadow: 0 35px 90px rgba(0,0,0,0.2);
+}
+
+/* LEFT */
+.pickup-left h1 {
+  font-family: 'Fredoka', cursive;
+  font-size: 36px;
+}
+
+.subtitle {
+  margin: 8px 0 22px;
+  color: #4f6f6f;
+}
+
+/* PRICE BOX */
+.food-box {
+  background: #f6fbf8;
+  border-radius: 26px;
+  padding: 22px;
+}
+
+.food-name {
+  font-family: 'Fredoka', cursive;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+hr {
+  margin: 10px 0;
+  border: none;
+  height: 1px;
+  background: #ddd;
+}
+
+/* BUTTON */
+.confirm-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 28px;
+  border: none;
+  background: linear-gradient(135deg, #b8e4c8, #e9f6ec);
+  font-family: 'Fredoka', cursive;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.back {
+  margin-top: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #4f6f6f;
+}
+
+/* RIGHT */
+.location-box {
+  background: #eef7ff;
+  border-radius: 26px;
+  padding: 22px;
+}
+
+.location-box h3 {
+  font-family: 'Fredoka', cursive;
+  margin-bottom: 14px;
+}
+
+.pickup-location {
+  background: white;
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.pickup-location span {
+  display: block;
+  font-size: 13px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #4f6f6f;
+}
+/* AI CHAT BUTTON */
+.ai-chat-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  z-index: 9999;
+}
+
+/* CHATBOX */
+.ai-chatbox {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 320px;
+  height: 420px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 22px 55px rgba(0,0,0,0.25);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  font-family: 'Inter', sans-serif;
+}
+
+/* HEADER */
+.ai-header {
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+  padding: 14px 18px;
+  font-family: 'Fredoka', cursive;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MESSAGES */
+.ai-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  background: #fff7ec;
+}
+
+.ai-bot,
+.ai-user {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.ai-bot {
+  background: #e9f6ec;
+  align-self: flex-start;
+}
+
+.ai-user {
+  background: #ffd6a5;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+/* INPUT */
+.ai-input {
+  display: flex;
+  padding: 10px;
+  gap: 8px;
+  border-top: 1px solid #eee;
+}
+
+.ai-input input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+}
+
+.ai-input button {
+  border: none;
+  background: #2f7a4f;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.redirect-notice {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2f7a4f;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 22px;
+  font-family: 'Fredoka', cursive;
+  font-size: 15px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  display: none;
+  z-index: 9999;
+}
+

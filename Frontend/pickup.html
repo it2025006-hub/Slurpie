@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Self Pickup | Slurpie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="pickup.css">
+  <link rel="stylesheet" href="dark.css">
+</head>
+
+<body>
+
+<div class="bg-pattern"></div>
+
+<div class="pickup-wrapper">
+
+  <!-- LEFT -->
+  <div class="pickup-left">
+    <h1>🏃 Self Pickup</h1>
+    <p class="subtitle">Pick up your food directly from the vendor</p>
+
+    <div class="food-box">
+      <div class="food-name">Your Cart Items</div>
+
+      <div class="row">Base Price <span>₹ <span id="basePrice">0</span></span></div>
+      <div class="row">Platform Fee <span>₹ 6.70</span></div>
+
+      <hr>
+
+      <div class="row total">
+        Total <span>₹ <span id="totalPrice">0</span></span>
+      </div>
+    </div>
+
+    <button class="confirm-btn" onclick="confirmPickup()">
+      ✅ CONFIRM PICKUP
+    </button>
+
+    <div class="back" onclick="goBack()">← Back to cart</div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="pickup-right">
+    <div class="location-box">
+      <h3>📍 Pickup Locations (Beleghata)</h3>
+
+      <div class="pickup-location">
+        🏪 Slurpie Hub  
+        <span>12A Beleghata Main Road, Kolkata 700010</span>
+      </div>
+
+      <div class="pickup-location">
+        🏪 Community Food Point  
+        <span>Near Beleghata CIT More, Kolkata 700010</span>
+      </div>
+
+      <div class="pickup-location">
+        🏪 Slurpie Partner Store  
+        <span>Opp. ITC Sonar, Beleghata, Kolkata 700010</span>
+      </div>
+
+      <p class="hint">
+        ⏰ Please collect your food within 2 hours of confirmation
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* PRICING */
+const PLATFORM_FEE = 6.70;
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+if (cart.length === 0) {
+  alert("Your cart is empty!");
+  window.location.href = "available-food.html";
+}
+
+let basePrice = 0;
+cart.forEach(item => basePrice += item.price);
+
+document.getElementById("basePrice").textContent = basePrice.toFixed(2);
+document.getElementById("totalPrice").textContent = (basePrice + PLATFORM_FEE).toFixed(2);
+
+
+function confirmPickup() {
+  // Clear cart
+  localStorage.removeItem("cart");
+
+  // Show bottom message
+  const notice = document.getElementById("redirectNotice");
+  const countdownEl = document.getElementById("countdown");
+  notice.style.display = "block";
+
+  let timeLeft = 10;
+  countdownEl.textContent = timeLeft;
+
+  const timer = setInterval(() => {
+    timeLeft--;
+    countdownEl.textContent = timeLeft;
+
+    if (timeLeft === 0) {
+      clearInterval(timer);
+      window.location.replace("home.html");
+    }
+  }, 1000);
+}
+
+
+
+function goBack() {
+  window.location.href = "cart.html";
+}
+
+/* DARK MODE FOLLOWER */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+
+<!-- AI CHATBOX -->
+<div id="aiChat" class="ai-chatbox">
+  <div class="ai-header">
+    🤍 Slurpie Assistant
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
+    <div class="ai-bot">Hi! 👋 Need help with pickup?</div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const chat = document.getElementById("aiChat");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById("aiMessages");
+
+  const userDiv = document.createElement("div");
+  userDiv.className = "ai-user";
+  userDiv.textContent = msg;
+  messages.appendChild(userDiv);
+
+  input.value = "";
+
+  setTimeout(() => {
+    const botDiv = document.createElement("div");
+    botDiv.className = "ai-bot";
+    botDiv.textContent =
+      "😊 Pickup locations are fixed in Beleghata. Just visit and collect!";
+    messages.appendChild(botDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+</script>
+<div id="redirectNotice" class="redirect-notice">
+  🎉 Pickup confirmed! Redirecting to Home in <span id="countdown">10</span> seconds…
+</div>
+
+
+</body>
+</html>

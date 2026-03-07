@@ -1,0 +1,131 @@
+/* =========================
+   GLOBAL DARK MODE
+   ========================= */
+body.dark {
+  background: linear-gradient(135deg, #121212, #1e1e1e) !important;
+  color: #f2f2f2 !important;
+}
+
+/* TEXT */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark span,
+body.dark footer {
+  color: #e5e5e5;
+}
+
+/* BACKGROUND PATTERN */
+body.dark .bg-pattern {
+  opacity: 0.05;
+}
+
+/* =========================
+   CARDS / CONTAINERS
+   ========================= */
+body.dark .action,
+body.dark .food-card,
+body.dark .food-box,
+body.dark .location-box,
+body.dark .checkout-wrapper {
+  background: #2b2b2b !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* BUTTONS */
+body.dark button {
+  background: #2f7a4f;
+  color: white;
+}
+
+body.dark button:hover {
+  filter: brightness(1.1);
+}
+
+/* INPUTS & TEXTAREA */
+body.dark input,
+body.dark textarea {
+  background: #1f1f1f;
+  color: white;
+  border: 1px solid #444;
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #aaa;
+}
+
+/* =========================
+   HEADER / TOP BAR
+   ========================= */
+body.dark .top-bar {
+  background: rgba(20,20,20,0.9);
+}
+
+body.dark .account,
+body.dark .night-btn {
+  background: #2a2a2a;
+  color: white;
+}
+
+/* ACCOUNT DROPDOWN */
+body.dark .account-menu {
+  background: #1f1f1f;
+  color: white;
+}
+
+/* =========================
+   AI CHATBOX
+   ========================= */
+body.dark .ai-chatbox {
+  background: #1b1b1b;
+}
+
+body.dark .ai-header {
+  background: linear-gradient(135deg,#1f6f4a,#3fa77a);
+}
+
+body.dark .ai-messages {
+  background: #121212;
+}
+
+body.dark .ai-bot {
+  background: #2a2a2a;
+  color: #f2f2f2;
+}
+
+body.dark .ai-user {
+  background: #3a3a3a;
+  color: white;
+}
+
+body.dark .ai-input input {
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+}
+
+/* =========================
+   LINKS & HOVER
+   ========================= */
+body.dark a {
+  color: #8fd3b6;
+}
+
+body.dark .action:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+}
+/* SORT & FILTER - DARK MODE */
+body.dark .sort-select {
+  background: linear-gradient(135deg, #1f1f1f, #2b2b2b);
+  color: #000000;
+  border: 1px solid #000000;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+}
+
+body.dark .sort-select option {
+  background: #2b2b2b;
+  color: #000000;
+}

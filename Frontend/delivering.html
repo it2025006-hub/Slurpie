@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery in Progress | Slurpie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="delivering.css">
+  <link rel="stylesheet" href="dark.css">
+
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<div class="delivery-container">
+
+  <!-- TIMER SCREEN -->
+  <div id="timerScreen" class="card">
+    <h1>🛵 Food is on the way!</h1>
+    <p class="subtitle">Our Superman is delivering your food 🦸‍♂️</p>
+
+    <div class="timer">
+      <span id="minutes">01</span> :
+      <span id="seconds">00</span>
+    </div>
+
+    <p class="info">Please wait for a moment ⏳</p>
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div id="successScreen" class="card success">
+
+    <h1>🎉 HURRAY!</h1>
+
+    <p class="message">
+      🦸‍♂️ Superman arrived at your doorstep!<br><br>
+      Please pay via <strong>cash</strong> 💵 <br>
+      or take Superman’s number and <strong>UPI</strong> him 📱
+    </p>
+
+    <p class="thanks">
+      🍞 Thank you for choosing <strong>Slurpie</strong> 🤍
+    </p>
+
+    <!-- FEEDBACK SECTION -->
+    <div id="feedbackSection" class="feedback">
+      <h3>⭐ Rate your experience</h3>
+
+      <div class="stars">
+        <span onclick="selectStar(1)">★</span>
+        <span onclick="selectStar(2)">★</span>
+        <span onclick="selectStar(3)">★</span>
+        <span onclick="selectStar(4)">★</span>
+        <span onclick="selectStar(5)">★</span>
+      </div>
+
+      <button onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+
+    <!-- FINAL MESSAGE -->
+    <div id="finalMessage" class="final-message">
+      😊 Thank you for showing patience.<br>
+      Have a nice day!
+    </div>
+
+    <!-- REDIRECT MESSAGE -->
+    <div id="redirectMessage" class="final-message">
+      🔄 REDIRECTING TO HOME PAGE IN <span id="countdown">10</span> SECONDS
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  /* DELIVERY TIMER */
+  let totalTime = 60;
+
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+  const timerScreen = document.getElementById("timerScreen");
+  const successScreen = document.getElementById("successScreen");
+
+  function updateTimer() {
+    const minutes = Math.floor(totalTime / 60);
+    const seconds = totalTime % 60;
+
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+
+    if (totalTime === 0) {
+      clearInterval(timerInterval);
+      timerScreen.style.display = "none";
+      successScreen.style.display = "flex";
+    }
+
+    totalTime--;
+  }
+
+  updateTimer();
+  const timerInterval = setInterval(updateTimer, 1000);
+
+  /* FEEDBACK */
+  let selectedStars = 0;
+
+  function selectStar(count) {
+    selectedStars = count;
+    document.querySelectorAll(".stars span").forEach((star, index) => {
+      star.classList.toggle("active", index < count);
+    });
+  }
+
+  function submitFeedback() {
+    if (selectedStars === 0) {
+      alert("Please select a star rating ⭐");
+      return;
+    }
+
+    document.getElementById("feedbackSection").style.display = "none";
+    document.getElementById("finalMessage").style.display = "block";
+
+    startRedirectCountdown();
+  }
+
+  /* REDIRECT COUNTDOWN */
+  function startRedirectCountdown() {
+    let timeLeft = 10;
+    const countdownEl = document.getElementById("countdown");
+    const redirectMsg = document.getElementById("redirectMessage");
+
+    redirectMsg.style.display = "block";
+
+    const redirectTimer = setInterval(() => {
+      timeLeft--;
+      countdownEl.textContent = timeLeft;
+
+      if (timeLeft === 0) {
+        clearInterval(redirectTimer);
+        window.location.href = "home.html";
+      }
+    }, 1000);
+  }
+</script>
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+
+<!-- AI CHATBOX -->
+<div id="aiChat" class="ai-chatbox">
+  <div class="ai-header">
+    🤍 Slurpie Assistant
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
+    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+<script>
+function toggleChat() {
+  const chat = document.getElementById("aiChat");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById("aiMessages");
+
+  // User message
+  const userDiv = document.createElement("div");
+  userDiv.className = "ai-user";
+  userDiv.textContent = msg;
+  messages.appendChild(userDiv);
+
+  input.value = "";
+
+  // Fake AI response (for now)
+  setTimeout(() => {
+    const botDiv = document.createElement("div");
+    botDiv.className = "ai-bot";
+    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
+    messages.appendChild(botDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+</script>
+<script>
+/* =========================
+   DARK MODE FOLLOWER
+   ========================= */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+<script>
+/* =========================
+   DARK MODE FOLLOWER
+   ========================= */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart | Slurpie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="darkdark.css">
+</head>
+
+<body>
+
+<div class="bg-pattern"></div>
+
+<header>
+  <h1>🛒 YOUR CART</h1>
+  <p>Review your selected items 🤍</p>
+</header>
+
+<section class="cart-section">
+
+  <div id="cartItems" class="cart-items"></div>
+
+  <div class="cart-summary">
+    <h2>Total: ₹<span id="totalPrice">0</span></h2>
+
+    <!-- NEW BUTTONS -->
+    <button class="checkout-btn" onclick="proceedDelivery()">
+      🚚 PROCEED TO DELIVERY
+    </button>
+
+    <button class="checkout-btn pickup-btn" onclick="proceedPickup()">
+      🏃 PROCEED TO SELF PICKUP
+    </button>
+  </div>
+
+</section>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartItemsDiv = document.getElementById("cartItems");
+const totalPriceSpan = document.getElementById("totalPrice");
+
+function renderCart() {
+  cartItemsDiv.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    cartItemsDiv.innerHTML = "<p class='empty'>🧺 Your cart is empty</p>";
+    totalPriceSpan.textContent = "0";
+    return;
+  }
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "cart-item";
+
+    itemDiv.innerHTML = `
+      <span>${item.name}</span>
+      <span>₹${item.price}</span>
+      <button onclick="removeItem(${index})">❌</button>
+    `;
+
+    cartItemsDiv.appendChild(itemDiv);
+  });
+
+  totalPriceSpan.textContent = total;
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+/* NEW FLOWS */
+function proceedDelivery() {
+  window.location.href = "checkout.html";
+}
+
+function proceedPickup() {
+  window.location.href = "pickup.html";
+}
+
+renderCart();
+</script>
+
+<!-- AI CHAT BUTTON -->
+<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+
+<!-- AI CHATBOX -->
+<div id="aiChat" class="ai-chatbox">
+  <div class="ai-header">
+    🤍 Slurpie Assistant
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div id="aiMessages" class="ai-messages">
+    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const chat = document.getElementById("aiChat");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  const input = document.getElementById("aiInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById("aiMessages");
+
+  const userDiv = document.createElement("div");
+  userDiv.className = "ai-user";
+  userDiv.textContent = msg;
+  messages.appendChild(userDiv);
+
+  input.value = "";
+
+  setTimeout(() => {
+    const botDiv = document.createElement("div");
+    botDiv.className = "ai-bot";
+    botDiv.textContent =
+      "😊 You can choose delivery or self pickup from here!";
+    messages.appendChild(botDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }, 700);
+}
+</script>
+
+<script>
+/* DARK MODE FOLLOWER */
+if (localStorage.getItem("nightMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+/* =========================
+   GLOBAL DARK MODE
+   ========================= */
+body.dark {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a) !important;
+  color: #000000 !important;
+}
+
+/* =========================
+   TEXT (PURE BLACK SHADES)
+   ========================= */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark p,
+body.dark span,
+body.dark footer,
+body.dark label,
+body.dark strong {
+  color: #000000 !important;
+}
+
+/* Secondary / muted text */
+body.dark .subtitle,
+body.dark .tagline,
+body.dark .question,
+body.dark .hint,
+body.dark .back,
+body.dark .illus-text {
+  color: #111111 !important;
+}
+
+/* =========================
+   BACKGROUND PATTERN
+   ========================= */
+body.dark .bg-pattern {
+  opacity: 0.04;
+}
+
+/* =========================
+   CARDS & CONTAINERS
+   ========================= */
+body.dark .action,
+body.dark .food-card,
+body.dark .food-box,
+body.dark .location-box,
+body.dark .checkout-wrapper,
+body.dark .manual-address,
+body.dark .illustration {
+  background: #2a2a2a !important;
+  box-shadow: 0 22px 55px rgba(0,0,0,0.75);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+body.dark button,
+body.dark .order-btn,
+body.dark .location-btn {
+  background: linear-gradient(135deg, #1f1f1f, #2b2b2b);
+  color: #000000 !important;
+  border: 1px solid #000000;
+}
+
+body.dark button:hover {
+  filter: brightness(1.08);
+}
+
+/* =========================
+   INPUTS & TEXTAREA
+   ========================= */
+body.dark input,
+body.dark textarea {
+  background: #1c1c1c;
+  color: #000000 !important;
+  border: 1px solid #000000;
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #111111;
+}
+
+/* =========================
+   BADGES / PRICE TAGS
+   ========================= */
+body.dark .badge,
+body.dark .price {
+  background: #1e1e1e;
+  color: #000000 !important;
+}
+
+/* =========================
+   HEADER / TOP BAR
+   ========================= */
+body.dark .top-bar,
+body.dark header {
+  background: #1a1a1a;
+}
+
+/* =========================
+   ACCOUNT SECTION
+   ========================= */
+body.dark .account,
+body.dark .account-menu {
+  background: #1f1f1f;
+  color: #000000 !important;
+}
+
+/* =========================
+   AI CHATBOX
+   ========================= */
+body.dark .ai-chatbox {
+  background: #1a1a1a;
+}
+
+body.dark .ai-header {
+  background: #2a2a2a;
+  color: #000000 !important;
+}
+
+body.dark .ai-messages {
+  background: #121212;
+}
+
+body.dark .ai-bot {
+  background: #2b2b2b;
+  color: #000000 !important;
+}
+
+body.dark .ai-user {
+  background: #3a3a3a;
+  color: #000000 !important;
+}
+
+body.dark .ai-input input {
+  background: #1c1c1c;
+  color: #000000 !important;
+  border: 1px solid #000000;
+}
+
+body.dark .ai-input button {
+  background: #2a2a2a;
+  color: #000000 !important;
+}
+
+/* =========================
+   LINKS & HOVER
+   ========================= */
+body.dark a {
+  color: #000000 !important;
+}
+
+body.dark .action:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 65px rgba(0,0,0,0.85);
+}
