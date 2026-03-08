@@ -21,21 +21,22 @@
       <h1>🍰 Join Slurpie</h1>
       <p class="subtitle">Create an account & spread food love 🤍</p>
 
-      <form onsubmit="redirectToHome(event)">
+      <form id="signupForm">
 
         <label>👤 Name <span class="mandatory">* </span></label>
-        <input type="text" placeholder="Enter your name" required>
+        <input id="signupName" type="text" placeholder="Enter your name" required>
 
         <label>📞 Phone No. <span class="mandatory">* </span></label>
-        <input type="tel" placeholder="Enter your phone number" required>
+        <input id="signupPhone" type="tel" placeholder="Enter your phone number" required>
 
         <label>📧 Mail <span class="mandatory">* </span></label>
-        <input type="email" placeholder="Enter your email" required>
+        <input id="signupEmail" type="email" placeholder="Enter your email" required>
 
         <label>🔒 Password <span class="mandatory">* </span></label>
-        <input type="password" placeholder="Create a password" required>
+        <input id="signupPassword" type="password" placeholder="Create a password" required>
 
         <button class="btn signup-btn">Sign Up</button>
+
       </form>
     </div>
 
@@ -44,46 +45,128 @@
       <h1>🍞 Welcome Back</h1>
       <p class="subtitle">Already part of Slurpie? Log in 😊</p>
 
-      <form onsubmit="redirectToHome(event)">
+      <form id="loginForm">
 
         <label>📧 Mail <span class="mandatory">* </span></label>
-        <input type="email" placeholder="Enter your email" required>
+        <input id="loginEmail" type="email" placeholder="Enter your email" required>
 
         <label>🔒 Password <span class="mandatory">* </span></label>
-        <input type="password" placeholder="Enter your password" required>
+        <input id="loginPassword" type="password" placeholder="Enter your password" required>
 
         <button class="btn login-btn">Login</button>
+
       </form>
     </div>
 
   </div>
 
-  <script>
-    function redirectToHome(event) {
-      event.preventDefault();
-      window.location.href = "home.html";
-    }
-  </script>
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
+  <!-- AI CHAT BUTTON -->
+  <div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
 
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
+  <!-- AI CHATBOX -->
+  <div id="aiChat" class="ai-chatbox">
+    <div class="ai-header">
+      🤍 Slurpie Assistant
+      <span onclick="toggleChat()">✖</span>
+    </div>
+
+    <div id="aiMessages" class="ai-messages">
+      <div class="ai-bot">Hi! 👋 How can I help you today?</div>
+    </div>
+
+    <div class="ai-input">
+      <input type="text" id="aiInput" placeholder="Ask me anything...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
 <script>
+
+const API = "http://localhost:5000/api/auth";
+
+/* SIGNUP */
+
+document.getElementById("signupForm").addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const name = document.getElementById("signupName").value;
+  const phone = document.getElementById("signupPhone").value;
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPassword").value;
+
+  try {
+
+    const res = await fetch(`${API}/signup`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        name,
+        phone,
+        email,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      window.location.href="home.html";
+    }else{
+      alert(data.message);
+    }
+
+  } catch(err){
+    console.error(err);
+    alert("Server error");
+  }
+
+});
+
+
+/* LOGIN */
+
+document.getElementById("loginForm").addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  try {
+
+    const res = await fetch(`${API}/login`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        email,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+
+      localStorage.setItem("token",data.token);
+      window.location.href="home.html";
+
+    }else{
+      alert(data.message || "Wrong email or password");
+    }
+
+  } catch(err){
+    console.error(err);
+    alert("Server error");
+  }
+
+});
+
+
 function toggleChat() {
   const chat = document.getElementById("aiChat");
   chat.style.display = chat.style.display === "flex" ? "none" : "flex";
@@ -96,7 +179,6 @@ function sendMessage() {
 
   const messages = document.getElementById("aiMessages");
 
-  // User message
   const userDiv = document.createElement("div");
   userDiv.className = "ai-user";
   userDiv.textContent = msg;
@@ -104,7 +186,6 @@ function sendMessage() {
 
   input.value = "";
 
-  // Fake AI response (for now)
   setTimeout(() => {
     const botDiv = document.createElement("div");
     botDiv.className = "ai-bot";
@@ -113,6 +194,7 @@ function sendMessage() {
     messages.scrollTop = messages.scrollHeight;
   }, 700);
 }
+
 </script>
 
 </body>
