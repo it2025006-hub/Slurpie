@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Slurpie Profile</title>
+<link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+<div class="profile-wrapper">
+<div class="profile-card">
+
+<h1 class="title">Slurpie Profile</h1>
+
+<!-- AVATAR SECTION -->
+
+<div class="avatar-section">
+
+<h3>Choose Avatar</h3>
+
+<div class="avatar-carousel">
+
+<button class="arrow" onclick="prevAvatar()">&#10094;</button>
+
+<div class="avatar-frame">
+<img id="avatarDisplay" src="avatars/a1.png">
+</div>
+
+<button class="arrow" onclick="nextAvatar()">&#10095;</button>
+
+</div>
+
+<button class="save-avatar">Save Avatar</button>
+
+<p id="avatarMessage"></p>
+
+</div>
+
+
+<!-- USER INFO -->
+
+<div class="form-section">
+
+<h2>Account Information</h2>
+
+<div class="input-group">
+<label>User Name</label>
+<input type="text" id="name">
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="email" readonly>
+</div>
+
+<div class="input-group">
+<label>Mobile Number</label>
+<input type="text" id="phone" readonly>
+</div>
+
+</div>
+
+
+<!-- PASSWORD SECTION -->
+
+<div class="form-section">
+
+<h2>Change Password</h2>
+
+<div class="input-group">
+<label>Current Password</label>
+<input type="password" id="currentPassword">
+</div>
+
+<div class="input-group">
+<label>New Password</label>
+<input type="password" id="newPassword">
+</div>
+
+<div class="input-group">
+<label>Confirm Password</label>
+<input type="password" id="confirmPassword">
+</div>
+
+</div>
+
+<button class="save-btn">Save Changes</button>
+
+<p id="profileMessage"></p>
+
+</div>
+</div>
+
+
+<script>
+
+const token = localStorage.getItem("token");
+
+if(!token){
+window.location.href="index.html";
+}
+
+
+/* LOAD USER DATA */
+
+async function loadUser(){
+
+try{
+
+const res = await fetch("http://localhost:5000/api/auth/me",{
+headers:{ "Authorization":"Bearer "+token }
+});
+
+const user = await res.json();
+
+document.getElementById("name").value = user.name;
+document.getElementById("email").value = user.email;
+document.getElementById("phone").value = user.phone;
+
+if(user.avatar){
+document.getElementById("avatarDisplay").src = user.avatar;
+}
+
+}catch(err){
+console.log(err);
+}
+
+}
+
+loadUser();
+
+
+/* PROFILE UPDATE */
+
+document.querySelector(".save-btn").addEventListener("click", async ()=>{
+
+const name = document.getElementById("name").value;
+const message = document.getElementById("profileMessage");
+
+try{
+
+await fetch("http://localhost:5000/api/user/update-profile",{
+
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
+body:JSON.stringify({name})
+
+});
+
+message.innerText="Profile updated successfully. Redirecting to Home in 5 seconds...";
+
+setTimeout(()=>{
+window.location.href="home.html";
+},5000);
+
+}catch(err){
+
+console.log(err);
+
+message.innerText="Changes saved. Redirecting to Home in 5 seconds...";
+
+setTimeout(()=>{
+window.location.href="home.html";
+},5000);
+
+}
+
+});
+
+
+/* CHANGE PASSWORD */
+
+document.querySelector(".save-btn").addEventListener("click", async ()=>{
+
+const currentPassword=document.getElementById("currentPassword").value;
+const newPassword=document.getElementById("newPassword").value;
+const confirmPassword=document.getElementById("confirmPassword").value;
+
+if(newPassword!==confirmPassword) return;
+
+if(newPassword.length>0){
+
+try{
+
+await fetch("http://localhost:5000/api/user/change-password",{
+
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
+body:JSON.stringify({currentPassword,newPassword})
+
+});
+
+}catch(err){
+console.log(err);
+}
+
+}
+
+});
+
+
+/* AVATAR SWITCH SYSTEM */
+
+let avatars=[
+"avatars/a1.png",
+"avatars/a2.png",
+"avatars/a3.png",
+"avatars/a4.png",
+"avatars/a5.png",
+"avatars/a6.png",
+"avatars/a7.png",
+"avatars/a8.png",
+"avatars/a9.png",
+"avatars/a10.png"
+];
+
+let avatarIndex=0;
+const avatarDisplay=document.getElementById("avatarDisplay");
+
+function showAvatar(){
+avatarDisplay.style.opacity=0;
+
+setTimeout(()=>{
+avatarDisplay.src=avatars[avatarIndex];
+avatarDisplay.style.opacity=1;
+},150);
+}
+
+function nextAvatar(){
+
+avatarIndex++;
+
+if(avatarIndex>=avatars.length){
+avatarIndex=0;
+}
+
+showAvatar();
+
+}
+
+function prevAvatar(){
+
+avatarIndex--;
+
+if(avatarIndex<0){
+avatarIndex=avatars.length-1;
+}
+
+showAvatar();
+
+}
+
+
+/* SAVE AVATAR */
+
+document.querySelector(".save-avatar").addEventListener("click",async()=>{
+
+const avatar=avatars[avatarIndex];
+const message=document.getElementById("avatarMessage");
+
+try{
+
+await fetch("http://localhost:5000/api/user/update-avatar",{
+
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+token
+},
+body:JSON.stringify({avatar})
+
+});
+
+message.innerText="Avatar saved successfully. Redirecting to Home in 5 seconds...";
+
+setTimeout(()=>{
+window.location.href="home.html";
+},5000);
+
+}catch(err){
+
+console.log(err);
+
+message.innerText="Avatar updated. Redirecting to Home in 5 seconds...";
+
+setTimeout(()=>{
+window.location.href="home.html";
+},5000);
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

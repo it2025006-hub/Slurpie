@@ -21,17 +21,24 @@
   <button class="night-btn" onclick="toggleNight()">🌙</button>
 
   <div class="account" onclick="toggleAccount()">
-    <span class="avatar">👤</span>
+
+    <!-- USER AVATAR -->
+    <img id="navAvatar" class="nav-avatar" src="avatars/a1.png">
+
     <span id="accountEmail">Account</span>
 
     <div id="accountMenu" class="account-menu">
 
       <div class="account-header">
-        <div class="account-avatar">👤</div>
+
+        <!-- DROPDOWN AVATAR -->
+        <img id="menuAvatar" class="account-avatar-img" src="avatars/a1.png">
+
         <div>
           <div class="account-name" id="accountName">Account</div>
           <div class="account-email" id="userEmail">Not logged in</div>
         </div>
+
       </div>
 
       <div class="menu-section">
@@ -103,17 +110,17 @@
 
   <div class="slideshow">
 
-    <img class="slide active" src="bhujiya.png">
-    <img class="slide" src="biscuit.png">
-    <img class="slide" src="coca-cola.png">
-    <img class="slide" src="diet-coke.png">
-    <img class="slide" src="frozen-dessert.png">
-    <img class="slide" src="frozen-pizza.png">
-    <img class="slide" src="lays-blue.png">
-    <img class="slide" src="mango-juice.png">
-    <img class="slide" src="mountain-dew.png">
-    <img class="slide" src="peanut-butter.png">
-    <img class="slide" src="plum-cake.png">
+    <img class="slide active" src="Slideshow/bhujiya.png">
+    <img class="slide" src="Slideshow/biscuit.png">
+    <img class="slide" src="Slideshow/coca-cola.png">
+    <img class="slide" src="Slideshow/diet-coke.png">
+    <img class="slide" src="Slideshow/frozen-dessert.png">
+    <img class="slide" src="Slideshow/frozen-pizza.png">
+    <img class="slide" src="Slideshow/lays-blue.png">
+    <img class="slide" src="Slideshow/mango-juice.png">
+    <img class="slide" src="Slideshow/mountain-dew.png">
+    <img class="slide" src="Slideshow/peanut-butter.png">
+    <img class="slide" src="Slideshow/plum-cake.png">
   
   </div>
 
@@ -151,6 +158,15 @@ fetch("http://localhost:5000/api/auth/me",{
   document.getElementById("accountEmail").textContent = user.name;
   document.getElementById("accountName").textContent = user.name;
   document.getElementById("userEmail").textContent = user.email;
+
+  /* LOAD AVATAR */
+
+  if(user.avatar){
+
+    document.getElementById("navAvatar").src = user.avatar;
+    document.getElementById("menuAvatar").src = user.avatar;
+
+  }
 
 })
 .catch(()=>{
@@ -225,7 +241,6 @@ function sendMessage() {
     messages.scrollTop = messages.scrollHeight;
   }, 700);
 }
-
 </script>
 
 <script>

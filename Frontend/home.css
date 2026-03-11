@@ -326,3 +326,20 @@ body {
 .slide.active{
   opacity:1;
 }
+.nav-avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #E6B800;
+margin-right:6px;
+}
+
+.account-avatar-img{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+margin-right:10px;
+border:2px solid #E6B800;
+}
