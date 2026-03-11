@@ -21,12 +21,41 @@
   <button class="night-btn" onclick="toggleNight()">🌙</button>
 
   <div class="account" onclick="toggleAccount()">
-    <span class="avatar">👤</span>
+
+    <!-- USER AVATAR -->
+    <img id="navAvatar" class="nav-avatar" src="avatars/a1.png">
+
     <span id="accountEmail">Account</span>
 
     <div id="accountMenu" class="account-menu">
-      <p><strong>Email:</strong><br><span id="userEmail">Not logged in</span></p>
-      <button onclick="logout()">Logout</button>
+
+      <div class="account-header">
+
+        <!-- DROPDOWN AVATAR -->
+        <img id="menuAvatar" class="account-avatar-img" src="avatars/a1.png">
+
+        <div>
+          <div class="account-name" id="accountName">Account</div>
+          <div class="account-email" id="userEmail">Not logged in</div>
+        </div>
+
+      </div>
+
+      <div class="menu-section">
+        <button onclick="window.location.href='profile.html'">👤 Profile</button>
+        <button onclick="window.location.href='saved-addresses.html'">📍 Saved Addresses</button>
+      </div>
+
+      <div class="menu-section">
+        <button onclick="window.location.href='help.html'">❓ Help</button>
+        <button onclick="window.location.href='settings.html'">⚙ Settings</button>
+        <button onclick="window.location.href='about.html'">ℹ About Us</button>
+      </div>
+
+      <div class="menu-section">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -77,19 +106,28 @@
     <footer>🤍 Together, let’s reduce food waste.</footer>
   </div>
 
-  <!-- Right -->
-  <div class="right">
-    <div class="illustration">
-      🍞 🧁 🥪 🥛 🍪 🍰 🌮 🍕 🍣
-    </div>
-    <p class="illus-text">Saving food. Sharing smiles 😊</p>
+ <div class="right">
+
+  <div class="slideshow">
+
+    <img class="slide active" src="Slideshow/bhujiya.png">
+    <img class="slide" src="Slideshow/biscuit.png">
+    <img class="slide" src="Slideshow/coca-cola.png">
+    <img class="slide" src="Slideshow/diet-coke.png">
+    <img class="slide" src="Slideshow/frozen-dessert.png">
+    <img class="slide" src="Slideshow/frozen-pizza.png">
+    <img class="slide" src="Slideshow/lays-blue.png">
+    <img class="slide" src="Slideshow/mango-juice.png">
+    <img class="slide" src="Slideshow/mountain-dew.png">
+    <img class="slide" src="Slideshow/peanut-butter.png">
+    <img class="slide" src="Slideshow/plum-cake.png">
+  
   </div>
 
 </div>
 
-<!-- =========================
-     RANDOM BUTTON COLORS
-========================= -->
+</div>
+
 <script>
 const shades = [
   "#E8F5E9","#DFF5EA","#C8E6C9","#B7E4C7",
@@ -101,30 +139,50 @@ document.querySelectorAll('.action').forEach(btn => {
 });
 </script>
 
-<!-- =========================
-     ACCOUNT + DARK MODE
-========================= -->
 <script>
-/* Load user email */
-const email = localStorage.getItem("email");
-if (email) {
-  document.getElementById("accountEmail").textContent = email.split("@")[0];
-  document.getElementById("userEmail").textContent = email;
+
+const token = localStorage.getItem("token");
+
+if(!token){
+  window.location.href = "index.html";
 }
 
-/* Toggle account menu */
+fetch("http://localhost:5000/api/auth/me",{
+  headers:{
+    "Authorization":"Bearer " + token
+  }
+})
+.then(res => res.json())
+.then(user => {
+
+  document.getElementById("accountEmail").textContent = user.name;
+  document.getElementById("accountName").textContent = user.name;
+  document.getElementById("userEmail").textContent = user.email;
+
+  /* LOAD AVATAR */
+
+  if(user.avatar){
+
+    document.getElementById("navAvatar").src = user.avatar;
+    document.getElementById("menuAvatar").src = user.avatar;
+
+  }
+
+})
+.catch(()=>{
+  window.location.href = "index.html";
+});
+
 function toggleAccount() {
   const menu = document.getElementById("accountMenu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-/* Logout */
 function logout() {
   localStorage.clear();
   window.location.href = "index.html";
 }
 
-/* Dark mode sync */
 if (localStorage.getItem("nightMode") === "true") {
   document.body.classList.add("dark");
 }
@@ -134,6 +192,7 @@ function toggleNight() {
   localStorage.setItem("nightMode", isDark);
 }
 </script>
+
 <!-- AI CHAT BUTTON -->
 <div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
 
@@ -153,6 +212,7 @@ function toggleNight() {
     <button onclick="sendMessage()">Send</button>
   </div>
 </div>
+
 <script>
 function toggleChat() {
   const chat = document.getElementById("aiChat");
@@ -166,7 +226,6 @@ function sendMessage() {
 
   const messages = document.getElementById("aiMessages");
 
-  // User message
   const userDiv = document.createElement("div");
   userDiv.className = "ai-user";
   userDiv.textContent = msg;
@@ -174,7 +233,6 @@ function sendMessage() {
 
   input.value = "";
 
-  // Fake AI response (for now)
   setTimeout(() => {
     const botDiv = document.createElement("div");
     botDiv.className = "ai-bot";
@@ -183,6 +241,25 @@ function sendMessage() {
     messages.scrollTop = messages.scrollHeight;
   }, 700);
 }
+</script>
+
+<script>
+
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function showSlide(){
+
+  slides[index].classList.remove("active");
+
+  index = (index + 1) % slides.length;
+
+  slides[index].classList.add("active");
+
+}
+
+setInterval(showSlide, 3500);
+
 </script>
 
 </body>

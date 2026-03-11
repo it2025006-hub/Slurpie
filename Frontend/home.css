@@ -28,14 +28,15 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  padding: 70px;
+  padding: 60px 70px 70px 70px;
 }
 
-/* LEFT */
 .left {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: -10px;
+  margin-top: -40px;
 }
 
 .logo {
@@ -92,31 +93,12 @@ body {
 .emoji { font-size: 40px; }
 .arrow { margin-left: auto; }
 
-/* RIGHT */
+/* RIGHT BLANK */
 .right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 
-.illustration {
-  font-size: 64px;
-  letter-spacing: 18px;
-  background: rgba(255,255,255,0.65);
-  padding: 46px 56px;
-  border-radius: 34px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
-}
-
-.illus-text {
-  margin-top: 26px;
-  font-size: 18px;
-}
-
-/* =========================
-   TOP RIGHT CONTROLS
-========================= */
+/* TOP RIGHT */
 .top-right {
   position: fixed;
   top: 20px;
@@ -127,7 +109,6 @@ body {
   z-index: 9999;
 }
 
-/* DARK MODE BUTTON */
 .night-btn {
   border: none;
   padding: 10px 14px;
@@ -154,24 +135,72 @@ body {
   display: none;
   position: absolute;
   right: 0;
-  top: 46px;
+  top: 50px;
+  width: 260px;
   background: white;
-  padding: 14px;
-  border-radius: 18px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-  min-width: 220px;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+  padding: 16px;
+}
+
+/* HEADER */
+.account-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.account-avatar {
+  width: 40px;
+  height: 40px;
+  background: #ffe4c4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.account-name {
+  font-weight: 600;
+  font-family: 'Fredoka', cursive;
+}
+
+.account-email {
+  font-size: 12px;
+  color: #777;
+}
+
+/* MENU SECTIONS */
+.menu-section {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
 }
 
 .account-menu button {
   width: 100%;
   border: none;
   padding: 10px;
-  border-radius: 14px;
+  margin-top: 6px;
+  border-radius: 12px;
   cursor: pointer;
-  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
-  color: white;
-  font-family: 'Fredoka', cursive;
+  background: #fff7ec;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
 }
+
+.account-menu button:hover {
+  background: #ffe4c4;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f) !important;
+  color: white;
+  text-align: center;
+}
+
 /* AI CHAT BUTTON */
 .ai-chat-btn {
   position: fixed;
@@ -225,6 +254,8 @@ body {
   padding: 14px;
   overflow-y: auto;
   background: #fff7ec;
+  display: flex;
+  flex-direction: column;
 }
 
 .ai-bot,
@@ -244,7 +275,6 @@ body {
 .ai-user {
   background: #ffd6a5;
   align-self: flex-end;
-  margin-left: auto;
 }
 
 /* INPUT */
@@ -271,4 +301,45 @@ body {
   cursor: pointer;
 }
 
+/* SLIDESHOW */
 
+.slideshow{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.slide{
+  position:absolute;
+  width:80%;
+  height:80%;
+  object-fit:cover;
+  border-radius:28px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.25);
+  opacity:0;
+  transition:opacity 1s ease;
+}
+
+.slide.active{
+  opacity:1;
+}
+.nav-avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #E6B800;
+margin-right:6px;
+}
+
+.account-avatar-img{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+margin-right:10px;
+border:2px solid #E6B800;
+}
