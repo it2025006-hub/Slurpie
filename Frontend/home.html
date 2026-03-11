@@ -99,8 +99,25 @@
     <footer>🤍 Together, let’s reduce food waste.</footer>
   </div>
 
-  <!-- Right blank -->
-  <div class="right"></div>
+ <div class="right">
+
+  <div class="slideshow">
+
+    <img class="slide active" src="bhujiya.png">
+    <img class="slide" src="biscuit.png">
+    <img class="slide" src="coca-cola.png">
+    <img class="slide" src="diet-coke.png">
+    <img class="slide" src="frozen-dessert.png">
+    <img class="slide" src="frozen-pizza.png">
+    <img class="slide" src="lays-blue.png">
+    <img class="slide" src="mango-juice.png">
+    <img class="slide" src="mountain-dew.png">
+    <img class="slide" src="peanut-butter.png">
+    <img class="slide" src="plum-cake.png">
+  
+  </div>
+
+</div>
 
 </div>
 
@@ -208,6 +225,26 @@ function sendMessage() {
     messages.scrollTop = messages.scrollHeight;
   }, 700);
 }
+
+</script>
+
+<script>
+
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+function showSlide(){
+
+  slides[index].classList.remove("active");
+
+  index = (index + 1) % slides.length;
+
+  slides[index].classList.add("active");
+
+}
+
+setInterval(showSlide, 3500);
+
 </script>
 
 </body>
