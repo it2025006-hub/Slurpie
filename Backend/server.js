@@ -5,6 +5,8 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const addressRoutes = require("./routes/addressRoutes");   // NEW
 
 const app = express();
 
@@ -13,17 +15,22 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth",authRoutes);
+/* ROUTES */
 
-app.get("/",(req,res)=>{
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/address", addressRoutes);   // NEW
+
+
+/* TEST ROUTE */
+
+app.get("/", (req,res)=>{
   res.send("Server running");
 });
 
+
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT,()=>{
-  console.log("Server started on port "+PORT);
+app.listen(PORT, ()=>{
+  console.log("Server started on port " + PORT);
 });
-const userRoutes = require("./routes/userRoutes");
-
-app.use("/api/user", userRoutes);
