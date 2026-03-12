@@ -9,6 +9,12 @@
 
 <body>
 
+<!-- BACK BUTTON (TOP LEFT CORNER) -->
+
+<button class="back-btn" onclick="goHome()">
+⬅️ Back
+</button>
+
 <div class="page">
 
 <!-- LEFT SECTION -->
@@ -64,6 +70,11 @@ let marker
 let geocoder
 
 const token = localStorage.getItem("token")
+
+function goHome(){
+window.location.href="home.html"
+}
+
 
 /* INITIALIZE MAP */
 
@@ -137,13 +148,9 @@ function getAddress(latlng){
 let location
 
 if(typeof latlng.lat === "function"){
-
 location = {lat:latlng.lat(), lng:latlng.lng()}
-
 }else{
-
 location = latlng
-
 }
 
 geocoder.geocode({location:location},(results,status)=>{
@@ -208,7 +215,7 @@ getAddress(location)
 
 
 
-/* SAVE ADDRESS (UPDATED WITH LATITUDE & LONGITUDE) */
+/* SAVE ADDRESS */
 
 document.getElementById("saveAddress").onclick = async ()=>{
 
@@ -250,6 +257,46 @@ loadAddresses()
 
 
 
+/* DELETE ADDRESS */
+
+async function deleteAddress(id){
+
+await fetch(`http://localhost:5000/api/address/${id}`,{
+
+method:"DELETE",
+
+headers:{
+Authorization:`Bearer ${token}`
+}
+
+})
+
+loadAddresses()
+
+}
+
+
+
+/* SET DEFAULT ADDRESS */
+
+async function setDefault(id){
+
+await fetch(`http://localhost:5000/api/address/set-default/${id}`,{
+
+method:"PUT",
+
+headers:{
+Authorization:`Bearer ${token}`
+}
+
+})
+
+loadAddresses()
+
+}
+
+
+
 /* LOAD ADDRESSES */
 
 async function loadAddresses(){
@@ -260,7 +307,9 @@ headers:{ Authorization:`Bearer ${token}` }
 
 })
 
-const addresses = await res.json()
+let addresses = await res.json()
+
+addresses.sort((a,b)=> b.defaultAddress - a.defaultAddress)
 
 const container = document.getElementById("addressList")
 
@@ -272,10 +321,20 @@ container.innerHTML += `
 
 <div class="address-card">
 
-<h3>${a.label}</h3>
+<div class="card-header">
+<h3>${a.label} ${a.defaultAddress ? "⭐" : ""}</h3>
+<button class="delete-btn" onclick="deleteAddress('${a._id}')">Delete</button>
+</div>
+
 <p>${a.address}</p>
 <p>${a.city}</p>
 <p>${a.pincode}</p>
+
+<div class="card-footer">
+<button class="default-btn" onclick="setDefault('${a._id}')">
+Set as Default
+</button>
+</div>
 
 </div>
 

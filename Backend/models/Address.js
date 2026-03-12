@@ -23,12 +23,17 @@ label:{
 type:String
 },
 
-latitude:{           // ADD THIS
+latitude:{
 type:Number
 },
 
-longitude:{          // ADD THIS
+longitude:{
 type:Number
+},
+
+defaultAddress:{          // ⭐ NEW FIELD
+type:Boolean,
+default:false
 },
 
 createdAt:{
