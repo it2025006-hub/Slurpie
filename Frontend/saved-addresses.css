@@ -1,0 +1,290 @@
+html, body{
+height:100%;
+margin:0;
+font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+background:#fff9e6;
+}
+
+/* MAIN PAGE LAYOUT */
+
+.page{
+display:flex;
+justify-content:center;
+gap:28px;
+padding:80px 60px 40px 60px;
+height:100vh;
+box-sizing:border-box;
+}
+
+/* PANELS */
+
+.left-panel,
+.right-panel{
+width:650px;
+height:75vh;
+padding:34px;
+border-radius:26px;
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+overflow-y:auto;
+transition:all 0.25s ease;
+}
+
+.left-panel:hover,
+.right-panel:hover{
+box-shadow:0 20px 45px rgba(0,0,0,0.12);
+}
+
+/* LEFT PANEL */
+
+.left-panel{
+background:#fff3b0;
+display:flex;
+flex-direction:column;
+}
+
+/* RIGHT PANEL */
+
+.right-panel{
+background:#fffdf2;
+display:flex;
+flex-direction:column;
+}
+
+.left-panel h2,
+.right-panel h2{
+margin-top:0;
+margin-bottom:22px;
+color:#7a5600;
+font-weight:600;
+letter-spacing:0.3px;
+}
+
+/* MAP */
+
+#map{
+width:100%;
+height:300px;
+border-radius:18px;
+margin-bottom:20px;
+flex-shrink:0;
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* MAP CONTROLS */
+
+.map-controls{
+display:flex;
+justify-content:center;
+margin-bottom:22px;
+}
+
+/* FORM */
+
+.form{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* INPUTS */
+
+.form input{
+width:100%;
+padding:13px;
+border:none;
+border-radius:14px;
+font-size:14px;
+background:#fffdf4;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+transition:all 0.2s ease;
+}
+
+.form select{
+width:25%;
+padding:13px;
+border:none;
+border-radius:14px;
+font-size:14px;
+background:#fffdf4;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+transition:all 0.2s ease;
+}
+
+.form input:focus,
+.form select:focus{
+outline:none;
+background:#fff9e0;
+box-shadow:0 0 0 2px #ffcc00;
+}
+
+/* BUTTONS */
+
+button{
+padding:12px 24px;
+border:none;
+border-radius:50px;
+background:#ffcc00;
+font-weight:600;
+cursor:pointer;
+transition:all 0.25s ease;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+button:hover{
+background:#ffd633;
+transform:translateY(-2px);
+box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+
+#saveAddress{
+align-self:center;
+padding:12px 26px;
+font-size:14px;
+margin-top:20px;
+width:fit-content;
+}
+
+#saveMsg{
+margin-top:8px;
+font-size:14px;
+color:#5a4600;
+text-align:center;
+}
+
+/* ADDRESS LIST */
+
+#addressList{
+display:flex;
+flex-direction:column;
+gap:18px;
+margin-top:10px;
+}
+
+/* ADDRESS CARD */
+
+.address-card{
+background:#fff9e6;
+padding:24px;
+border-radius:18px;
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
+transition:all 0.25s ease;
+}
+
+.address-card:hover{
+transform:translateY(-4px);
+box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.card-footer{
+display:flex;
+justify-content:flex-end;
+margin-top:12px;
+}
+
+.address-card h3{
+margin:0;
+font-size:19px;
+color:#7a5600;
+font-weight:600;
+}
+
+.address-card p{
+margin:6px 0;
+font-size:15px;
+color:#333;
+}
+
+/* DELETE BUTTON */
+
+.delete-btn{
+background:#ff4d4d;
+color:white;
+border:none;
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+cursor:pointer;
+transition:all 0.2s ease;
+}
+
+.delete-btn:hover{
+background:#ff1a1a;
+transform:scale(1.05);
+}
+
+/* DEFAULT BUTTON */
+
+.default-btn{
+background:#2ecc71;
+color:white;
+border:none;
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+cursor:pointer;
+transition:all 0.2s ease;
+}
+
+.default-btn:hover{
+background:#27ae60;
+transform:scale(1.05);
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+position:fixed;
+top:14px;
+left:14px;
+display:flex;
+align-items:center;
+gap:6px;
+background:#ffcc00;
+padding:8px 16px;
+border:none;
+border-radius:30px;
+font-size:14px;
+font-weight:600;
+color:#5a4600;
+cursor:pointer;
+box-shadow:0 6px 14px rgba(0,0,0,0.12);
+transition:all 0.2s ease;
+z-index:1000;
+}
+
+.back-btn:hover{
+background:#ffd633;
+transform:translateY(-1px);
+box-shadow:0 8px 18px rgba(0,0,0,0.18);
+}
+
+/* CUSTOM SCROLLBAR */
+
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar{
+width:8px;
+}
+
+.left-panel::-webkit-scrollbar-track,
+.right-panel::-webkit-scrollbar-track{
+background:#fff3b0;
+border-radius:10px;
+}
+
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb{
+background:#ffcc00;
+border-radius:10px;
+}
+
+.left-panel::-webkit-scrollbar-thumb:hover,
+.right-panel::-webkit-scrollbar-thumb:hover{
+background:#ffdb4d;
+}

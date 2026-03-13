@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Saved Addresses | Slurpie</title>
+<link rel="stylesheet" href="saved-addresses.css">
+</head>
+
+<body>
+
+<!-- BACK BUTTON (TOP LEFT CORNER) -->
+
+<button class="back-btn" onclick="goHome()">
+⬅️ Back
+</button>
+
+<div class="page">
+
+<!-- LEFT SECTION -->
+
+<div class="left-panel">
+
+<h2>📍 Save New Address</h2>
+
+<div id="map"></div>
+
+<div class="map-controls">
+<button id="locateBtn">Locate My Position</button>
+</div>
+
+<div class="form">
+
+<input id="address" placeholder="Write Your Full Address">
+<input id="city" placeholder="City">
+<input id="pincode" placeholder="Pincode">
+
+<select id="label">
+<option value="Home">Home</option>
+<option value="Work">Work</option>
+<option value="Pickup Point">Pickup Point</option>
+</select>
+
+<button id="saveAddress">Save Address</button>
+
+<p id="saveMsg"></p>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT SECTION -->
+
+<div class="right-panel">
+
+<h2>📦 Your Saved Addresses</h2>
+
+<div id="addressList"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let map
+let marker
+let geocoder
+
+const token = localStorage.getItem("token")
+
+function goHome(){
+window.location.href="home.html"
+}
+
+
+/* INITIALIZE MAP */
+
+function initMap(){
+
+geocoder = new google.maps.Geocoder()
+
+map = new google.maps.Map(document.getElementById("map"),{
+
+center:{lat:22.5726,lng:88.3639},
+zoom:13
+
+})
+
+marker = new google.maps.Marker({
+
+position:map.getCenter(),
+map:map,
+draggable:true
+
+})
+
+detectUserLocation()
+
+marker.addListener("dragend", ()=>{
+
+const position = marker.getPosition()
+getAddress(position)
+
+})
+
+map.addListener("click",(e)=>{
+
+marker.setPosition(e.latLng)
+getAddress(e.latLng)
+
+})
+
+}
+
+
+
+/* AUTO DETECT LOCATION */
+
+function detectUserLocation(){
+
+navigator.geolocation.getCurrentPosition((pos)=>{
+
+const lat = pos.coords.latitude
+const lng = pos.coords.longitude
+
+const location = new google.maps.LatLng(lat,lng)
+
+map.setCenter(location)
+map.setZoom(16)
+
+marker.setPosition(location)
+
+getAddress(location)
+
+})
+
+}
+
+
+
+/* GET ADDRESS */
+
+function getAddress(latlng){
+
+let location
+
+if(typeof latlng.lat === "function"){
+location = {lat:latlng.lat(), lng:latlng.lng()}
+}else{
+location = latlng
+}
+
+geocoder.geocode({location:location},(results,status)=>{
+
+if(status==="OK" && results[0]){
+
+document.getElementById("address").value = results[0].formatted_address
+
+let components = results[0].address_components
+
+let city=""
+let pincode=""
+
+components.forEach(c=>{
+
+if(
+c.types.includes("locality") ||
+c.types.includes("administrative_area_level_2") ||
+c.types.includes("administrative_area_level_1")
+){
+city = c.long_name
+}
+
+if(c.types.includes("postal_code")){
+pincode = c.long_name
+}
+
+})
+
+document.getElementById("city").value = city
+document.getElementById("pincode").value = pincode
+
+}
+
+})
+
+}
+
+
+
+/* LOCATE BUTTON */
+
+document.getElementById("locateBtn").onclick = ()=>{
+
+navigator.geolocation.getCurrentPosition((pos)=>{
+
+const lat = pos.coords.latitude
+const lng = pos.coords.longitude
+
+const location = new google.maps.LatLng(lat,lng)
+
+map.setCenter(location)
+map.setZoom(16)
+
+marker.setPosition(location)
+
+getAddress(location)
+
+})
+
+}
+
+
+
+/* SAVE ADDRESS */
+
+document.getElementById("saveAddress").onclick = async ()=>{
+
+const address = document.getElementById("address").value
+const city = document.getElementById("city").value
+const pincode = document.getElementById("pincode").value
+const label = document.getElementById("label").value
+
+const latitude = marker.getPosition().lat()
+const longitude = marker.getPosition().lng()
+
+const res = await fetch("http://localhost:5000/api/address/add",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
+},
+
+body:JSON.stringify({
+address,
+city,
+pincode,
+label,
+latitude,
+longitude
+})
+
+})
+
+const data = await res.json()
+
+document.getElementById("saveMsg").innerText = data.message
+
+setTimeout(()=>{
+location.reload()
+},800)
+
+}
+
+
+
+/* DELETE ADDRESS */
+
+async function deleteAddress(id){
+
+await fetch(`http://localhost:5000/api/address/${id}`,{
+
+method:"DELETE",
+
+headers:{
+Authorization:`Bearer ${token}`
+}
+
+})
+
+loadAddresses()
+
+}
+
+
+
+/* SET DEFAULT ADDRESS */
+
+async function setDefault(id){
+
+await fetch(`http://localhost:5000/api/address/set-default/${id}`,{
+
+method:"PUT",
+
+headers:{
+Authorization:`Bearer ${token}`
+}
+
+})
+
+loadAddresses()
+
+}
+
+
+
+/* LOAD ADDRESSES */
+
+async function loadAddresses(){
+
+const res = await fetch("http://localhost:5000/api/address/my",{
+
+headers:{ Authorization:`Bearer ${token}` }
+
+})
+
+let addresses = await res.json()
+
+addresses.sort((a,b)=> b.defaultAddress - a.defaultAddress)
+
+const container = document.getElementById("addressList")
+
+container.innerHTML=""
+
+addresses.forEach(a=>{
+
+container.innerHTML += `
+
+<div class="address-card">
+
+<div class="card-header">
+<h3>${a.label} ${a.defaultAddress ? "⭐" : ""}</h3>
+<button class="delete-btn" onclick="deleteAddress('${a._id}')">Delete</button>
+</div>
+
+<p>${a.address}</p>
+<p>${a.city}</p>
+<p>${a.pincode}</p>
+
+<div class="card-footer">
+<button class="default-btn" onclick="setDefault('${a._id}')">
+Set as Default
+</button>
+</div>
+
+</div>
+
+`
+
+})
+
+}
+
+loadAddresses()
+
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfakHLx6LMr19kFFph2n80qsu773OeRQA&callback=initMap&libraries=places" async defer></script>
+
+</body>
+
+</html>
