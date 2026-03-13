@@ -31,7 +31,7 @@
 
 <div class="form">
 
-<input id="address" placeholder="Write Your Address">
+<input id="address" placeholder="Write Your Full Address">
 <input id="city" placeholder="City">
 <input id="pincode" placeholder="Pincode">
 
@@ -251,7 +251,9 @@ const data = await res.json()
 
 document.getElementById("saveMsg").innerText = data.message
 
-loadAddresses()
+setTimeout(()=>{
+location.reload()
+},800)
 
 }
 
