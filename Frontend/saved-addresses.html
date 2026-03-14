@@ -9,15 +9,11 @@
 
 <body>
 
-<!-- BACK BUTTON (TOP LEFT CORNER) -->
-
-<button class="back-btn" onclick="goHome()">
-⬅️ Back
-</button>
+<button class="back-btn" onclick="goHome()">⬅️ Back</button>
 
 <div class="page">
 
-<!-- LEFT SECTION -->
+<!-- LEFT PANEL -->
 
 <div class="left-panel">
 
@@ -31,15 +27,28 @@
 
 <div class="form">
 
-<input id="address" placeholder="Write Your Full Address">
-<input id="city" placeholder="City">
-<input id="pincode" placeholder="Pincode">
+<div class="input-group">
+<input id="address" required placeholder=" ">
+<label>Write Your Full Address</label>
+</div>
 
-<select id="label">
-<option value="Home">Home</option>
-<option value="Work">Work</option>
-<option value="Pickup Point">Pickup Point</option>
-</select>
+<div class="input-group">
+<input id="city" required placeholder=" ">
+<label>City</label>
+</div>
+
+<div class="input-group">
+<input id="pincode" required placeholder=" ">
+<label>Pincode</label>
+</div>
+
+<input type="hidden" id="label" value="Home">
+
+<div class="label-buttons">
+<button class="label-btn active" data-value="Home">🏠 Home</button>
+<button class="label-btn" data-value="Work">💼 Work</button>
+<button class="label-btn" data-value="Pickup Point">📦 Pickup</button>
+</div>
 
 <button id="saveAddress">Save Address</button>
 
@@ -50,7 +59,7 @@
 </div>
 
 
-<!-- RIGHT SECTION -->
+<!-- RIGHT PANEL -->
 
 <div class="right-panel">
 
@@ -76,6 +85,17 @@ window.location.href="home.html"
 }
 
 
+/* LABEL BUTTONS */
+
+document.querySelectorAll(".label-btn").forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll(".label-btn").forEach(b=>b.classList.remove("active"))
+btn.classList.add("active")
+document.getElementById("label").value=btn.dataset.value
+}
+})
+
+
 /* INITIALIZE MAP */
 
 function initMap(){
@@ -83,38 +103,31 @@ function initMap(){
 geocoder = new google.maps.Geocoder()
 
 map = new google.maps.Map(document.getElementById("map"),{
-
 center:{lat:22.5726,lng:88.3639},
 zoom:13
-
 })
 
 marker = new google.maps.Marker({
-
 position:map.getCenter(),
 map:map,
 draggable:true
-
 })
 
 detectUserLocation()
 
 marker.addListener("dragend", ()=>{
-
 const position = marker.getPosition()
 getAddress(position)
-
+loadAddresses()
 })
 
 map.addListener("click",(e)=>{
-
 marker.setPosition(e.latLng)
 getAddress(e.latLng)
-
+loadAddresses()
 })
 
 }
-
 
 
 /* AUTO DETECT LOCATION */
@@ -138,7 +151,6 @@ getAddress(location)
 })
 
 }
-
 
 
 /* GET ADDRESS */
@@ -190,7 +202,6 @@ document.getElementById("pincode").value = pincode
 }
 
 
-
 /* LOCATE BUTTON */
 
 document.getElementById("locateBtn").onclick = ()=>{
@@ -212,7 +223,6 @@ getAddress(location)
 })
 
 }
-
 
 
 /* SAVE ADDRESS */
@@ -258,45 +268,62 @@ location.reload()
 }
 
 
-
 /* DELETE ADDRESS */
 
 async function deleteAddress(id){
 
+const card = event.target.closest(".address-card")
+card.classList.add("removing")
+
+setTimeout(async ()=>{
+
 await fetch(`http://localhost:5000/api/address/${id}`,{
-
 method:"DELETE",
-
-headers:{
-Authorization:`Bearer ${token}`
-}
-
+headers:{Authorization:`Bearer ${token}`}
 })
 
 loadAddresses()
 
+},300)
+
 }
 
 
-
-/* SET DEFAULT ADDRESS */
+/* SET DEFAULT */
 
 async function setDefault(id){
 
 await fetch(`http://localhost:5000/api/address/set-default/${id}`,{
-
 method:"PUT",
-
-headers:{
-Authorization:`Bearer ${token}`
-}
-
+headers:{Authorization:`Bearer ${token}`}
 })
 
 loadAddresses()
 
 }
 
+
+/* DISTANCE FUNCTION */
+
+function calculateDistance(lat1, lon1, lat2, lon2){
+
+const R = 6371
+
+const dLat = (lat2-lat1) * Math.PI/180
+const dLon = (lon2-lon1) * Math.PI/180
+
+const a =
+Math.sin(dLat/2) * Math.sin(dLat/2) +
+Math.cos(lat1 * Math.PI/180) *
+Math.cos(lat2 * Math.PI/180) *
+Math.sin(dLon/2) *
+Math.sin(dLon/2)
+
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+
+return (R*c).toFixed(2)
+
+}
 
 
 /* LOAD ADDRESSES */
@@ -304,9 +331,7 @@ loadAddresses()
 async function loadAddresses(){
 
 const res = await fetch("http://localhost:5000/api/address/my",{
-
 headers:{ Authorization:`Bearer ${token}` }
-
 })
 
 let addresses = await res.json()
@@ -319,9 +344,19 @@ container.innerHTML=""
 
 addresses.forEach(a=>{
 
+const markerLat = marker.getPosition().lat()
+const markerLng = marker.getPosition().lng()
+
+const distance = calculateDistance(
+markerLat,
+markerLng,
+a.latitude,
+a.longitude
+)
+
 container.innerHTML += `
 
-<div class="address-card">
+<div class="address-card ${a.defaultAddress ? "default-card":""}">
 
 <div class="card-header">
 <h3>${a.label} ${a.defaultAddress ? "⭐" : ""}</h3>
@@ -331,6 +366,8 @@ container.innerHTML += `
 <p>${a.address}</p>
 <p>${a.city}</p>
 <p>${a.pincode}</p>
+
+<p class="distance">📍 ${distance} km from selected point</p>
 
 <div class="card-footer">
 <button class="default-btn" onclick="setDefault('${a._id}')">
@@ -354,5 +391,4 @@ loadAddresses()
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfakHLx6LMr19kFFph2n80qsu773OeRQA&callback=initMap&libraries=places" async defer></script>
 
 </body>
-
 </html>
