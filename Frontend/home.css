@@ -343,3 +343,232 @@ object-fit:cover;
 margin-right:10px;
 border:2px solid #E6B800;
 }
+
+/* GLOBAL SMOOTHNESS */
+
+body{
+  animation: pageFade 0.8s ease;
+}
+
+@keyframes pageFade{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ACTION BUTTON GLOW */
+
+.action{
+  position:relative;
+  overflow:hidden;
+}
+
+.action::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.35),transparent);
+  opacity:0;
+  transition:opacity 0.4s;
+}
+
+.action:hover::after{
+  opacity:1;
+}
+
+/* FLOAT EFFECT */
+
+.ai-chat-btn{
+  animation:floatButton 3s ease-in-out infinite;
+}
+
+@keyframes floatButton{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(-6px); }
+  100%{ transform:translateY(0px); }
+}
+
+/* AVATAR HOVER */
+
+.nav-avatar:hover,
+.account-avatar-img:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 12px rgba(230,184,0,0.6);
+  transition:all 0.3s ease;
+}
+
+/* ACCOUNT MENU ANIMATION */
+
+.account-menu{
+  transform:translateY(-10px);
+  opacity:0;
+  transition:all 0.25s ease;
+}
+
+.account-menu.show{
+  display:block;
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* CHAT MESSAGE POP */
+
+.ai-bot,
+.ai-user{
+  animation:chatPop 0.25s ease;
+}
+
+@keyframes chatPop{
+  from{
+    opacity:0;
+    transform:scale(0.9);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* INPUT FOCUS */
+
+.ai-input input:focus{
+  outline:none;
+  border:1px solid #2f7a4f;
+  box-shadow:0 0 0 3px rgba(47,122,79,0.15);
+}
+
+/* SLIDESHOW ZOOM EFFECT */
+
+.slide.active{
+  animation:slideZoom 6s ease infinite alternate;
+}
+
+@keyframes slideZoom{
+  from{ transform:scale(1); }
+  to{ transform:scale(1.05); }
+}
+
+/* CUSTOM SCROLLBAR */
+
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#fff7ec;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#ffd6a5;
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:#ffc078;
+}
+
+.account-menu button{
+  transition:all 0.2s ease;
+}
+
+.account-menu button:active{
+  transform:scale(0.97);
+}
+
+/* GLASSMORPHISM NAVBAR */
+
+.top-right{
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding:6px 10px;
+  border-radius:30px;
+}
+
+/* glass look for account */
+
+.account{
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.45);
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+/* ANIMATED BACKGROUND */
+
+body{
+  background: linear-gradient(
+    135deg,
+    #fff2e1,
+    #fde1c1,
+    #ffe4c4,
+    #ffd6a5
+  );
+
+  background-size: 400% 400%;
+  animation: gradientMove 18s ease infinite;
+}
+
+@keyframes gradientMove{
+  0%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+  100%{ background-position:0% 50%; }
+}
+
+/* AI TYPING INDICATOR */
+
+.ai-typing{
+  display:flex;
+  gap:4px;
+  padding:10px 14px;
+  background:#e9f6ec;
+  border-radius:16px;
+  width:fit-content;
+}
+
+.ai-dot{
+  width:6px;
+  height:6px;
+  background:#2f7a4f;
+  border-radius:50%;
+  animation:typingBounce 1.4s infinite;
+}
+
+.ai-dot:nth-child(2){
+  animation-delay:0.2s;
+}
+
+.ai-dot:nth-child(3){
+  animation-delay:0.4s;
+}
+
+@keyframes typingBounce{
+  0%,80%,100%{ transform:scale(0); }
+  40%{ transform:scale(1); }
+}
+/* FLOATING ACTION CARDS */
+
+.action{
+  animation:cardFloat 6s ease-in-out infinite;
+}
+
+.action:nth-child(2){
+  animation-delay:2s;
+}
+
+@keyframes cardFloat{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(-8px); }
+  100%{ transform:translateY(0px); }
+}
+
+.action:hover{
+  box-shadow:
+  0 25px 55px rgba(0,0,0,0.25),
+  0 0 25px rgba(255,214,165,0.6);
+}

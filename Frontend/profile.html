@@ -9,6 +9,8 @@
 
 <body>
 
+<button class="back-btn" onclick="goHome()">⬅️ Back</button>
+
 <div class="profile-wrapper">
 <div class="profile-card">
 
@@ -65,13 +67,14 @@
 
 <!-- PASSWORD SECTION -->
 
-<div class="form-section">
+<div class="form-section" id="changePasswordSection">
 
 <h2>Change Password</h2>
 
-<div class="input-group">
+<div class="input-group password-group">
 <label>Current Password</label>
 <input type="password" id="currentPassword">
+<span class="toggle-password" onclick="togglePassword('currentPassword',this)">👁</span>
 </div>
 
 <div class="input-group">
@@ -79,9 +82,10 @@
 <input type="password" id="newPassword">
 </div>
 
-<div class="input-group">
+<div class="input-group password-group">
 <label>Confirm Password</label>
 <input type="password" id="confirmPassword">
+<span class="toggle-password" onclick="togglePassword('confirmPassword',this)">👁</span>
 </div>
 
 </div>
@@ -102,6 +106,38 @@ if(!token){
 window.location.href="index.html";
 }
 
+/* OPEN PASSWORD SECTION FROM SETTINGS */
+
+const section = localStorage.getItem("openSection");
+
+if(section === "password"){
+
+setTimeout(()=>{
+document.getElementById("changePasswordSection").scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+},400);
+
+localStorage.removeItem("openSection");
+
+}
+
+/* PASSWORD VISIBILITY */
+
+function togglePassword(id,icon){
+
+const input=document.getElementById(id);
+
+if(input.type==="password"){
+input.type="text";
+icon.innerText="🙈";
+}else{
+input.type="password";
+icon.innerText="👁";
+}
+
+}
 
 /* LOAD USER DATA */
 
@@ -299,6 +335,23 @@ window.location.href="home.html";
 
 });
 
+function goHome(){
+
+const fromSettings = localStorage.getItem("fromSettings");
+
+if(fromSettings === "true"){
+
+localStorage.removeItem("fromSettings");
+
+window.location.href="settings.html";
+
+}else{
+
+window.location.href="home.html";
+
+}
+
+}
 </script>
 
 </body>

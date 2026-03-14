@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Slurpie Settings</title>
+<link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+<div class="settings-wrapper">
+
+<h2 class="settings-title">⚙️ Settings</h2>
+
+<!-- APP SETTINGS -->
+
+<div class="settings-group">
+
+<div class="group-title">App</div>
+
+<div class="settings-card">
+
+<div class="setting-item">
+
+<div class="setting-left">
+<span class="icon">🔔</span>
+<span>Notifications</span>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="notificationToggle">
+<span class="slider"></span>
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ACCOUNT SETTINGS -->
+
+<div class="settings-group">
+
+<div class="group-title">Account</div>
+
+<div class="settings-card">
+
+<div class="setting-item clickable" onclick="openProfile()">
+
+<div class="setting-left">
+<span class="icon">👤</span>
+<span>Edit Profile</span>
+</div>
+
+<span class="arrow">›</span>
+
+</div>
+
+
+<div class="setting-item clickable" onclick="openPrivacy()">
+
+<div class="setting-left">
+<span class="icon">🔒</span>
+<span>Account Privacy</span>
+</div>
+
+<span class="arrow">›</span>
+
+</div>
+
+
+<div class="setting-item clickable" onclick="changeAccount()">
+
+<div class="setting-left">
+<span class="icon">🔄</span>
+<span>Change Account</span>
+</div>
+
+<span class="arrow">›</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+</div>
+
+
+<script>
+
+/* Notification Toggle */
+
+const toggle=document.getElementById("notificationToggle")
+
+let savedState=localStorage.getItem("notifications")
+
+if(savedState==="off"){
+toggle.checked=false
+}else{
+toggle.checked=true
+}
+
+toggle.addEventListener("change",()=>{
+
+if(toggle.checked){
+localStorage.setItem("notifications","on")
+}else{
+localStorage.setItem("notifications","off")
+}
+
+})
+
+
+/* Edit Profile */
+
+function openProfile(){
+
+localStorage.setItem("fromSettings","true")
+
+window.location.href="profile.html"
+
+}
+
+
+/* Account Privacy */
+
+function openPrivacy(){
+
+localStorage.setItem("fromSettings","true")
+localStorage.setItem("openSection","password")
+
+window.location.href="profile.html"
+
+}
+
+
+/* Change Account */
+
+function changeAccount(){
+
+localStorage.removeItem("token")
+
+window.location.href="index.html"
+
+}
+
+
+/* Back */
+
+function goBack(){
+window.location.href="home.html"
+}
+
+</script>
+
+</body>
+</html>
