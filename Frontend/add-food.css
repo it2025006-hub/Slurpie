@@ -101,14 +101,33 @@ textarea {
 /* LOCATION */
 .loc-btn {
   width: fit-content;
-  padding: 10px 18px;
-  border-radius: 18px;
+  padding: 12px 22px;
+  border-radius: 24px;
   border: none;
-  background: #e9f6ec;
-  color: #356b4a;
+
   font-family: 'Fredoka', cursive;
+  font-size: 15px;
+
+  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
+  color: white;
+
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+
+  box-shadow: 0 10px 25px rgba(47,122,79,0.35);
+
+  transition: all 0.25s ease;
+}
+
+/* HOVER */
+.loc-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 16px 35px rgba(47,122,79,0.45);
+}
+
+/* CLICK EFFECT */
+.loc-btn:active {
+  transform: scale(0.96);
 }
 
 #map {

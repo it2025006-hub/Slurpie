@@ -261,6 +261,47 @@ function showSlide(){
 
 setInterval(showSlide, 3500);
 
+const account = document.querySelector(".account");
+const menu = document.querySelector(".account-menu");
+
+account.addEventListener("click", () => {
+
+  if(menu.classList.contains("show")){
+      menu.classList.remove("show")
+      menu.style.display = "none"
+  }else{
+      menu.style.display = "block"
+      setTimeout(()=>{
+        menu.classList.add("show")
+      },10)
+  }
+
+});
+
+document.addEventListener("click",(e)=>{
+
+  if(!account.contains(e.target)){
+      menu.classList.remove("show")
+      menu.style.display="none"
+  }
+
+});
+
+function showTyping(){
+
+const typing=document.createElement("div")
+typing.className="ai-typing"
+
+typing.innerHTML=`
+<div class="ai-dot"></div>
+<div class="ai-dot"></div>
+<div class="ai-dot"></div>
+`
+
+document.querySelector(".ai-messages").appendChild(typing)
+
+}
+
 </script>
 
 </body>

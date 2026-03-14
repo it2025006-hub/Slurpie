@@ -1,0 +1,183 @@
+body{
+margin:0;
+font-family:"Segoe UI",Arial;
+background:linear-gradient(135deg,#fff8d6,#f1ffe6);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding-top:60px;
+}
+
+/* Wrapper */
+
+.settings-wrapper{
+width:420px;
+animation:fadeIn .6s ease;
+}
+
+/* Title */
+
+.settings-title{
+text-align:center;
+margin-bottom:30px;
+color:#2f5d34;
+font-size:26px;
+font-weight:600;
+}
+
+/* Groups */
+
+.settings-group{
+margin-bottom:26px;
+}
+
+/* Section titles */
+
+.group-title{
+font-size:13px;
+color:#777;
+margin-bottom:8px;
+margin-left:6px;
+letter-spacing:.5px;
+}
+
+/* Card */
+
+.settings-card{
+background:white;
+border-radius:18px;
+box-shadow:
+0 10px 25px rgba(0,0,0,0.08),
+0 4px 10px rgba(0,0,0,0.05);
+overflow:hidden;
+}
+
+/* Setting row */
+
+.setting-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 20px;
+border-bottom:1px solid #eee;
+transition:.25s;
+}
+
+.setting-item:last-child{
+border-bottom:none;
+}
+
+.setting-item.clickable{
+cursor:pointer;
+}
+
+.setting-item.clickable:hover{
+background:#f6ffe9;
+transform:translateX(5px);
+}
+
+/* Left side */
+
+.setting-left{
+display:flex;
+align-items:center;
+gap:14px;
+font-size:16px;
+}
+
+.icon{
+font-size:20px;
+}
+
+/* Arrow */
+
+.arrow{
+font-size:20px;
+color:#aaa;
+}
+
+/* Back button */
+
+.back-btn{
+margin-top:10px;
+width:100%;
+padding:13px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#3c8a4d,#2f5d34);
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 5px 12px rgba(0,0,0,0.15);
+}
+
+.back-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(0,0,0,0.2);
+}
+
+/* Toggle switch */
+
+.switch{
+position:relative;
+display:inline-block;
+width:46px;
+height:24px;
+}
+
+.switch input{
+opacity:0;
+width:0;
+height:0;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ddd;
+border-radius:30px;
+transition:.3s;
+}
+
+.slider:before{
+position:absolute;
+content:"";
+height:18px;
+width:18px;
+left:3px;
+bottom:3px;
+background:white;
+border-radius:50%;
+transition:.3s;
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider{
+background:#3c8a4d;
+}
+
+input:checked + .slider:before{
+transform:translateX(22px);
+}
+
+/* Page animation */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}

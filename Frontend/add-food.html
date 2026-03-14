@@ -8,16 +8,10 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-
   <link rel="stylesheet" href="add-food.css">
   <link rel="stylesheet" href="dark.css">
-
 </head>
+
 <body>
 
 <div class="bg-pattern"></div>
@@ -61,7 +55,7 @@
         Use My Location
       </button>
 
-      <textarea id="addressBox" placeholder="Pickup address will appear here..." required></textarea>
+      <textarea id="addressBox" placeholder="Enter the full pickup address..." required></textarea>
 
       <div id="map"></div>
       <small class="hint">📌 Drag the marker to adjust pickup location</small>
@@ -102,11 +96,10 @@
   </p>
 </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
+
 /* ---------------- FORM SUBMIT ---------------- */
+
 function postFood(event) {
   event.preventDefault();
 
@@ -118,122 +111,167 @@ function postFood(event) {
 }
 
 /* ---------------- IMAGE PREVIEW ---------------- */
+
 function previewImage(event) {
   const img = document.getElementById("previewImg");
   img.src = URL.createObjectURL(event.target.files[0]);
   img.style.display = "block";
 }
 
-/* ---------------- MAP + LOCATION ---------------- */
-let map, marker;
+/* ---------------- GOOGLE MAP SYSTEM ---------------- */
 
-function initMap(lat, lng) {
-  map = L.map('map').setView([lat, lng], 15);
+let map;
+let marker;
+let geocoder;
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
+function initMap() {
 
-  marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+  const defaultLocation = { lat: 22.5726, lng: 88.3639 };
 
-  marker.on('dragend', () => {
-    const pos = marker.getLatLng();
-    reverseGeocode(pos.lat, pos.lng);
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: defaultLocation,
+    zoom: 13
   });
+
+  geocoder = new google.maps.Geocoder();
+
+  marker = new google.maps.Marker({
+    position: defaultLocation,
+    map: map,
+    draggable: true
+  });
+
+  marker.addListener("dragend", () => {
+    const pos = marker.getPosition();
+    reverseGeocode(pos.lat(), pos.lng());
+  });
+
+  map.addListener("click", (e) => {
+    marker.setPosition(e.latLng);
+    reverseGeocode(e.latLng.lat(), e.latLng.lng());
+  });
+
 }
+
+/* USER LOCATION */
 
 function getLocation() {
-  navigator.geolocation.getCurrentPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
 
-    if (!map) {
-      initMap(lat, lng);
-    } else {
-      map.setView([lat, lng], 15);
-      marker.setLatLng([lat, lng]);
-    }
+  if (!navigator.geolocation) return;
+
+  navigator.geolocation.getCurrentPosition(position => {
+
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+
+    const userLocation = { lat, lng };
+
+    map.setCenter(userLocation);
+    map.setZoom(15);
+
+    marker.setPosition(userLocation);
 
     reverseGeocode(lat, lng);
+
   });
+
 }
 
+/* REVERSE GEOCODING */
+
 function reverseGeocode(lat, lng) {
-  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("addressBox").value =
-        data.display_name || "Address not found";
-    });
+
+  const latlng = { lat: lat, lng: lng };
+
+  geocoder.geocode({ location: latlng }, (results, status) => {
+
+    if (status === "OK") {
+
+      if (results[0]) {
+        document.getElementById("addressBox").value = results[0].formatted_address;
+      }
+
+    }
+
+  });
+
 }
 
 /* ---------------- CONFETTI ---------------- */
+
 function launchConfetti() {
+
   const container = document.getElementById("confetti-container");
   const colors = ["#ff6f61", "#f7d046", "#7bdff2", "#b388ff", "#95f9c3"];
 
   for (let i = 0; i < 120; i++) {
+
     const confetti = document.createElement("div");
+
     confetti.className = "confetti";
     confetti.style.left = Math.random() * 100 + "vw";
+
     confetti.style.backgroundColor =
       colors[Math.floor(Math.random() * colors.length)];
+
     confetti.style.animationDuration = 3 + Math.random() * 3 + "s";
+
     container.appendChild(confetti);
 
     setTimeout(() => confetti.remove(), 6000);
+
   }
+
 }
 
 /* ---------------- REDIRECT ---------------- */
+
 function startRedirect() {
+
   let timeLeft = 10;
+
   const countdown = document.getElementById("countdown");
 
   const timer = setInterval(() => {
+
     timeLeft--;
     countdown.textContent = timeLeft;
 
     if (timeLeft === 0) {
+
       clearInterval(timer);
       window.location.href = "home.html";
+
     }
+
   }, 1000);
+
 }
+
 </script>
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
 
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
+<!-- GOOGLE MAPS API -->
 
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfakHLx6LMr19kFFph2n80qsu773OeRQA&callback=initMap" async defer></script>
 
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
 <script>
+
+/* AI CHAT */
+
 function toggleChat() {
   const chat = document.getElementById("aiChat");
   chat.style.display = chat.style.display === "flex" ? "none" : "flex";
 }
 
 function sendMessage() {
+
   const input = document.getElementById("aiInput");
   const msg = input.value.trim();
+
   if (!msg) return;
 
   const messages = document.getElementById("aiMessages");
 
-  // User message
   const userDiv = document.createElement("div");
   userDiv.className = "ai-user";
   userDiv.textContent = msg;
@@ -241,23 +279,26 @@ function sendMessage() {
 
   input.value = "";
 
-  // Fake AI response (for now)
   setTimeout(() => {
+
     const botDiv = document.createElement("div");
     botDiv.className = "ai-bot";
-    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
+    botDiv.textContent =
+      "😊 I can help you find food, check veg items, or guide you!";
+
     messages.appendChild(botDiv);
     messages.scrollTop = messages.scrollHeight;
+
   }, 700);
+
 }
-</script>
-<script>
-/* =========================
-   DARK MODE FOLLOWER
-   ========================= */
+
+/* DARK MODE */
+
 if (localStorage.getItem("nightMode") === "true") {
   document.body.classList.add("dark");
 }
+
 </script>
 
 </body>
