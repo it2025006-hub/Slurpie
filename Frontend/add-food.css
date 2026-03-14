@@ -21,7 +21,6 @@ body {
   z-index: -1;
 }
 
-/* CONFETTI */
 #confetti-container {
   position: fixed;
   inset: 0;
@@ -37,12 +36,8 @@ body {
 }
 
 @keyframes fall {
-  from {
-    transform: translateY(-10vh) rotate(0deg);
-  }
-  to {
-    transform: translateY(110vh) rotate(360deg);
-  }
+  from { transform: translateY(-10vh) rotate(0deg); }
+  to { transform: translateY(110vh) rotate(360deg); }
 }
 
 /* PAGE */
@@ -52,27 +47,55 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px;
+  padding: 60px 20px;
 }
 
 h1 {
   font-family: 'Fredoka', cursive;
   font-size: 42px;
+  text-align: center;
 }
 
 .subtitle {
   margin-bottom: 30px;
   color: #7a4f3a;
+  text-align: center;
 }
 
-/* FORM */
 form {
-  width: 860px;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(10px);
-  padding: 40px 50px;
+  width: 100%;
+  max-width: 1200px; /* Wide breadth */
+}
+
+/* GRID FOR SEPARATE CARDS */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* INDIVIDUAL CARDS */
+.form-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 40px;
   border-radius: 28px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Subtle hover effect for the cards */
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 1000px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .field {
@@ -82,15 +105,24 @@ form {
 }
 
 label {
-  font-weight: 500;
-  margin-bottom: 6px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 
-input, textarea {
+input, textarea, select {
   padding: 14px 16px;
   border-radius: 14px;
-  border: none;
+  border: 1px solid rgba(90, 61, 43, 0.1);
   font-size: 14px;
+  background: white;
+  transition: all 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #e7b88c;
+  box-shadow: 0 0 0 4px rgba(231, 184, 140, 0.1);
 }
 
 textarea {
@@ -104,35 +136,24 @@ textarea {
   padding: 12px 22px;
   border-radius: 24px;
   border: none;
-
   font-family: 'Fredoka', cursive;
   font-size: 15px;
-
   background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
   color: white;
-
   cursor: pointer;
   margin-bottom: 10px;
-
   box-shadow: 0 10px 25px rgba(47,122,79,0.35);
-
   transition: all 0.25s ease;
 }
 
-/* HOVER */
 .loc-btn:hover {
-  transform: translateY(-3px) scale(1.05);
+  transform: translateY(-3px);
   box-shadow: 0 16px 35px rgba(47,122,79,0.45);
-}
-
-/* CLICK EFFECT */
-.loc-btn:active {
-  transform: scale(0.96);
 }
 
 #map {
   width: 100%;
-  height: 230px;
+  height: 250px;
   border-radius: 18px;
   margin-top: 10px;
 }
@@ -141,46 +162,51 @@ textarea {
   font-size: 12px;
   margin-top: 6px;
   color: #7a4f3a;
+  opacity: 0.8;
 }
 
-/* IMAGE PREVIEW */
 .image-preview {
   margin-top: 12px;
-  background: #f6e7d6;
+  background: #fdf5ec;
   border-radius: 18px;
   padding: 10px;
   display: flex;
   justify-content: center;
+  min-height: 50px;
 }
 
 .image-preview img {
   max-width: 100%;
-  max-height: 220px;
+  max-height: 200px;
   border-radius: 14px;
   display: none;
 }
 
-/* BUTTON */
+/* POST BUTTON */
 .post-btn {
-  width: 100%;
-  margin-top: 22px;
+  display: block;
+  width: 40%;
+  min-width: 250px;
+  margin: 50px auto 0;
   padding: 18px;
   border-radius: 20px;
   border: none;
   font-family: 'Fredoka', cursive;
-  font-size: 18px;
-  background: #e9f6ec;
-  color: #356b4a;
+  font-size: 20px;
+  background: #2f7a4f;
+  color: white;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(47, 122, 79, 0.3);
 }
 
 .post-btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.18);
+  background: #25613e;
+  box-shadow: 0 15px 40px rgba(47, 122, 79, 0.4);
 }
 
-/* SUCCESS */
+/* SUCCESS PAGE */
 .success {
   display: none;
   text-align: center;
@@ -207,102 +233,3 @@ textarea {
   font-size: 16px;
   color: #7a4f3a;
 }
-/* AI CHAT BUTTON */
-.ai-chat-btn {
-  position: fixed;
-  bottom: 22px;
-  right: 24px;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
-  color: white;
-  font-size: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
-  z-index: 9999;
-}
-
-/* CHATBOX */
-.ai-chatbox {
-  position: fixed;
-  bottom: 90px;
-  right: 24px;
-  width: 320px;
-  height: 420px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 22px 55px rgba(0,0,0,0.25);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 9999;
-  font-family: 'Inter', sans-serif;
-}
-
-/* HEADER */
-.ai-header {
-  background: linear-gradient(135deg,#2f7a4f,#5fbf8f);
-  color: white;
-  padding: 14px 18px;
-  font-family: 'Fredoka', cursive;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* MESSAGES */
-.ai-messages {
-  flex: 1;
-  padding: 14px;
-  overflow-y: auto;
-  background: #fff7ec;
-}
-
-.ai-bot,
-.ai-user {
-  max-width: 80%;
-  padding: 10px 14px;
-  border-radius: 16px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.ai-bot {
-  background: #e9f6ec;
-  align-self: flex-start;
-}
-
-.ai-user {
-  background: #ffd6a5;
-  align-self: flex-end;
-  margin-left: auto;
-}
-
-/* INPUT */
-.ai-input {
-  display: flex;
-  padding: 10px;
-  gap: 8px;
-  border-top: 1px solid #eee;
-}
-
-.ai-input input {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-}
-
-.ai-input button {
-  border: none;
-  background: #2f7a4f;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
