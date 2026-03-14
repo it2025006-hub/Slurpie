@@ -455,7 +455,9 @@ opacity:1;
 position:relative;
 }
 
-.address-card h3:has(+ button){
+.address-card h3:has(+ button)
+{
+
 }
 
 .address-card h3:contains("⭐"){
