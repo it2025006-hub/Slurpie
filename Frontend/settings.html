@@ -9,6 +9,43 @@
 
 <body>
 
+    <<div class="food-bg">
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+</div>
+
 <div class="settings-wrapper">
 
 <h2 class="settings-title">⚙️ Settings</h2>
@@ -157,6 +194,27 @@ window.location.href="index.html"
 function goBack(){
 window.location.href="home.html"
 }
+
+const food = document.querySelectorAll(".food-bg span");
+
+document.addEventListener("mousemove", (e) => {
+
+const x = e.clientX / window.innerWidth;
+const y = e.clientY / window.innerHeight;
+
+food.forEach((emoji, index) => {
+
+const speed = (index % 5 + 1) * 2;
+
+const moveX = (x - 0.5) * speed * 10;
+const moveY = (y - 0.5) * speed * 10;
+
+emoji.style.transform =
+`translate(${moveX}px, ${moveY}px)`;
+
+});
+
+});
 
 </script>
 

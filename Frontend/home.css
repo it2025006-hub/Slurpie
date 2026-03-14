@@ -572,3 +572,87 @@ body{
   0 25px 55px rgba(0,0,0,0.25),
   0 0 25px rgba(255,214,165,0.6);
 }
+
+/* FLOATING FOOD BACKGROUND */
+
+.food-bg{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:-1;
+
+}
+
+/* EMOJIS */
+
+.food-bg span{
+
+position:absolute;
+font-size:60px;
+opacity:0.18;
+
+transition:transform 0.3s ease;
+
+animation:floatFood 22s linear infinite;
+
+}
+
+/* RANDOM POSITIONS */
+
+.food-bg span:nth-child(1){left:5%; top:10%; animation-delay:0s;}
+.food-bg span:nth-child(2){left:15%; top:30%; animation-delay:2s;}
+.food-bg span:nth-child(3){left:25%; top:60%; animation-delay:4s;}
+.food-bg span:nth-child(4){left:35%; top:20%; animation-delay:6s;}
+.food-bg span:nth-child(5){left:45%; top:70%; animation-delay:8s;}
+.food-bg span:nth-child(6){left:55%; top:40%; animation-delay:10s;}
+.food-bg span:nth-child(7){left:65%; top:80%; animation-delay:12s;}
+food-bg span:nth-child(8){left:75%; top:50%; animation-delay:14s;}
+.food-bg span:nth-child(9){left:85%; top:15%; animation-delay:16s;}
+.food-bg span:nth-child(10){left:95%; top:65%; animation-delay:18s;}
+
+.food-bg span:nth-child(11){left:8%; top:45%; animation-delay:3s;}
+.food-bg span:nth-child(12){left:18%; top:75%; animation-delay:5s;}
+.food-bg span:nth-child(13){left:28%; top:35%; animation-delay:7s;}
+.food-bg span:nth-child(14){left:38%; top:55%; animation-delay:9s;}
+.food-bg span:nth-child(15){left:48%; top:25%; animation-delay:11s;}
+.food-bg span:nth-child(16){left:58%; top:70%; animation-delay:13s;}
+.food-bg span:nth-child(17){left:68%; top:30%; animation-delay:15s;}
+.food-bg span:nth-child(18){left:78%; top:85%; animation-delay:17s;}
+.food-bg span:nth-child(19){left:88%; top:45%; animation-delay:19s;}
+.food-bg span:nth-child(20){left:98%; top:20%; animation-delay:21s;}
+
+.food-bg span:nth-child(21){left:12%; top:60%; animation-delay:1s;}
+.food-bg span:nth-child(22){left:22%; top:15%; animation-delay:3s;}
+.food-bg span:nth-child(23){left:32%; top:80%; animation-delay:5s;}
+.food-bg span:nth-child(24){left:42%; top:35%; animation-delay:7s;}
+.food-bg span:nth-child(25){left:52%; top:50%; animation-delay:9s;}
+.food-bg span:nth-child(26){left:62%; top:10%; animation-delay:11s;}
+.food-bg span:nth-child(27){left:72%; top:65%; animation-delay:13s;}
+.food-bg span:nth-child(28){left:82%; top:40%; animation-delay:15s;}
+.food-bg span:nth-child(29){left:92%; top:75%; animation-delay:17s;}
+.food-bg span:nth-child(30){left:50%; top:90%; animation-delay:19s;}
+/* FLOAT ANIMATION */
+
+@keyframes floatFood{
+
+0%{
+transform:translateY(0) translateX(0) rotate(0deg);
+}
+
+50%{
+transform:translateY(-40px) translateX(25px) rotate(180deg);
+}
+
+100%{
+transform:translateY(0) translateX(0) rotate(360deg);
+}
+
+}
