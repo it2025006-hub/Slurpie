@@ -25,15 +25,12 @@ height:75vh;
 padding:36px;
 border-radius:30px;
 
-/* Smooth gradient background */
 background:linear-gradient(145deg,#fffdf2,#fff6c7);
 
-/* Glassy soft shadow */
 box-shadow:
 0 10px 25px rgba(0,0,0,0.08),
 0 4px 10px rgba(0,0,0,0.05);
 
-/* subtle border glow */
 border:1px solid rgba(255,204,0,0.3);
 
 overflow-y:auto;
@@ -45,13 +42,11 @@ box-shadow 0.25s ease;
 
 .left-panel:hover,
 .right-panel:hover{
-
 transform:translateY(-6px);
 
 box-shadow:
 0 25px 50px rgba(0,0,0,0.12),
 0 10px 20px rgba(0,0,0,0.08);
-
 }
 
 /* LEFT PANEL */
@@ -188,12 +183,28 @@ padding:24px;
 border-radius:18px;
 box-shadow:0 8px 18px rgba(0,0,0,0.08);
 transition:all 0.25s ease;
+
+animation:slideCard 0.5s ease forwards;
+opacity:0;
 }
 
 .address-card:hover{
 transform:translateY(-4px);
 box-shadow:0 12px 25px rgba(0,0,0,0.15);
 }
+
+/* DEFAULT ADDRESS STYLE */
+
+.address-card.default-address{
+border:2px solid #ffd633;
+box-shadow:0 0 10px rgba(255,204,0,0.6);
+}
+
+.address-card.default-address h3{
+color:#b88600;
+}
+
+/* CARD STRUCTURE */
 
 .card-header{
 display:flex;
@@ -260,7 +271,6 @@ transform:scale(1.05);
 /* BACK BUTTON */
 
 .back-btn{
-
 position:fixed;
 top:18px;
 left:18px;
@@ -279,12 +289,10 @@ font-weight:600;
 
 color:#5a4600;
 
-/* smooth gradient */
 background:linear-gradient(135deg,#ffd633,#ffcc00);
 
 cursor:pointer;
 
-/* modern shadow */
 box-shadow:
 0 6px 14px rgba(0,0,0,0.12),
 0 2px 6px rgba(0,0,0,0.08);
@@ -295,13 +303,9 @@ box-shadow 0.2s ease,
 background 0.2s ease;
 
 z-index:1000;
-
 }
 
-/* hover effect */
-
 .back-btn:hover{
-
 transform:translateY(-2px);
 
 background:linear-gradient(135deg,#ffe066,#ffd633);
@@ -309,18 +313,13 @@ background:linear-gradient(135deg,#ffe066,#ffd633);
 box-shadow:
 0 10px 22px rgba(0,0,0,0.18),
 0 4px 10px rgba(0,0,0,0.12);
-
 }
 
-/* click press effect */
-
 .back-btn:active{
-
 transform:scale(0.95);
 
 box-shadow:
 0 4px 8px rgba(0,0,0,0.12);
-
 }
 
 /* CUSTOM SCROLLBAR */
@@ -410,20 +409,7 @@ transform:translateY(-1px);
 background:#ffcc00;
 }
 
-/* ADDRESS CARD APPEAR ANIMATION */
-
-.address-card{
-background:#fff9e6;
-padding:24px;
-border-radius:18px;
-box-shadow:0 8px 18px rgba(0,0,0,0.08);
-transition:all 0.25s ease;
-
-animation:slideCard 0.5s ease forwards;
-opacity:0;
-}
-
-/* STAGGER EFFECT */
+/* CARD ANIMATION */
 
 .address-card:nth-child(1){animation-delay:0.05s;}
 .address-card:nth-child(2){animation-delay:0.1s;}
@@ -432,41 +418,15 @@ opacity:0;
 .address-card:nth-child(5){animation-delay:0.25s;}
 .address-card:nth-child(6){animation-delay:0.3s;}
 
-/* KEYFRAMES */
-
 @keyframes slideCard{
-
 0%{
 transform:translateY(20px);
 opacity:0;
 }
-
 100%{
 transform:translateY(0);
 opacity:1;
 }
-
-}
-
-/* DEFAULT ADDRESS GLOW */
-
-.address-card h3:has(+ button),
-.address-card h3:has(span){
-position:relative;
-}
-
-.address-card h3:has(+ button)
-{
-
-}
-
-.address-card h3:contains("⭐"){
-color:#b88600;
-}
-
-.address-card:has(h3:contains("⭐")){
-border:2px solid #ffd633;
-box-shadow:0 0 10px rgba(255,204,0,0.6);
 }
 
 /* DELETE ANIMATION */
@@ -476,17 +436,14 @@ animation:deleteCard 0.35s forwards;
 }
 
 @keyframes deleteCard{
-
 0%{
 opacity:1;
 transform:scale(1);
 }
-
 100%{
 opacity:0;
 transform:scale(0.9) translateX(40px);
 }
-
 }
 
 /* MAP MARKER PULSE */
@@ -501,21 +458,17 @@ animation:pulse 1.6s infinite;
 }
 
 @keyframes pulse{
-
 0%{
 transform:scale(1);
 opacity:0.9;
 }
-
 70%{
 transform:scale(2.5);
 opacity:0;
 }
-
 100%{
 opacity:0;
 }
-
 }
 
 .distance{
@@ -528,4 +481,52 @@ opacity:0.8;
 .left-panel,
 .right-panel{
 scroll-behavior:smooth;
+}
+
+/* FLOATING FOOD BACKGROUND */
+
+.floating-food{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+overflow:hidden;
+z-index:-2;
+}
+
+.floating-food span{
+
+position:absolute;
+
+font-size:42px;
+opacity:0.28;
+
+animation:floatFood linear infinite;
+
+}
+
+/* FLOAT ANIMATION */
+
+@keyframes floatFood{
+
+0%{
+transform:translateY(110vh) rotate(0deg);
+opacity:0;
+}
+
+20%{
+opacity:0.35;
+}
+
+80%{
+opacity:0.35;
+}
+
+100%{
+transform:translateY(-10vh) rotate(360deg);
+opacity:0;
+}
+
 }
