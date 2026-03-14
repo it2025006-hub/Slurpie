@@ -22,16 +22,36 @@ box-sizing:border-box;
 .right-panel{
 width:650px;
 height:75vh;
-padding:34px;
-border-radius:26px;
-box-shadow:0 15px 35px rgba(0,0,0,0.08);
+padding:36px;
+border-radius:30px;
+
+/* Smooth gradient background */
+background:linear-gradient(145deg,#fffdf2,#fff6c7);
+
+/* Glassy soft shadow */
+box-shadow:
+0 10px 25px rgba(0,0,0,0.08),
+0 4px 10px rgba(0,0,0,0.05);
+
+/* subtle border glow */
+border:1px solid rgba(255,204,0,0.3);
+
 overflow-y:auto;
-transition:all 0.25s ease;
+
+transition:
+transform 0.25s ease,
+box-shadow 0.25s ease;
 }
 
 .left-panel:hover,
 .right-panel:hover{
-box-shadow:0 20px 45px rgba(0,0,0,0.12);
+
+transform:translateY(-6px);
+
+box-shadow:
+0 25px 50px rgba(0,0,0,0.12),
+0 10px 20px rgba(0,0,0,0.08);
+
 }
 
 /* LEFT PANEL */
@@ -240,29 +260,67 @@ transform:scale(1.05);
 /* BACK BUTTON */
 
 .back-btn{
+
 position:fixed;
-top:14px;
-left:14px;
+top:18px;
+left:18px;
+
 display:flex;
 align-items:center;
-gap:6px;
-background:#ffcc00;
-padding:8px 16px;
+gap:8px;
+
+padding:10px 18px;
+
 border:none;
-border-radius:30px;
+border-radius:40px;
+
 font-size:14px;
 font-weight:600;
+
 color:#5a4600;
+
+/* smooth gradient */
+background:linear-gradient(135deg,#ffd633,#ffcc00);
+
 cursor:pointer;
-box-shadow:0 6px 14px rgba(0,0,0,0.12);
-transition:all 0.2s ease;
+
+/* modern shadow */
+box-shadow:
+0 6px 14px rgba(0,0,0,0.12),
+0 2px 6px rgba(0,0,0,0.08);
+
+transition:
+transform 0.2s ease,
+box-shadow 0.2s ease,
+background 0.2s ease;
+
 z-index:1000;
+
 }
 
+/* hover effect */
+
 .back-btn:hover{
-background:#ffd633;
-transform:translateY(-1px);
-box-shadow:0 8px 18px rgba(0,0,0,0.18);
+
+transform:translateY(-2px);
+
+background:linear-gradient(135deg,#ffe066,#ffd633);
+
+box-shadow:
+0 10px 22px rgba(0,0,0,0.18),
+0 4px 10px rgba(0,0,0,0.12);
+
+}
+
+/* click press effect */
+
+.back-btn:active{
+
+transform:scale(0.95);
+
+box-shadow:
+0 4px 8px rgba(0,0,0,0.12);
+
 }
 
 /* CUSTOM SCROLLBAR */
@@ -287,4 +345,185 @@ border-radius:10px;
 .left-panel::-webkit-scrollbar-thumb:hover,
 .right-panel::-webkit-scrollbar-thumb:hover{
 background:#ffdb4d;
+}
+
+/* FLOATING LABEL INPUTS */
+
+.input-group{
+position:relative;
+}
+
+.input-group input{
+width:100%;
+padding:16px 12px;
+border:none;
+border-radius:14px;
+background:#fffdf4;
+font-size:14px;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+outline:none;
+}
+
+.input-group label{
+position:absolute;
+left:12px;
+top:14px;
+font-size:14px;
+color:#777;
+pointer-events:none;
+transition:0.2s ease;
+background:#fffdf4;
+padding:0 4px;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
+top:-8px;
+font-size:12px;
+color:#7a5600;
+}
+
+/* ADDRESS TYPE BUTTONS */
+
+.label-buttons{
+display:flex;
+gap:10px;
+margin-top:5px;
+}
+
+.label-btn{
+border:none;
+border-radius:25px;
+padding:8px 14px;
+background:#ffe8a3;
+cursor:pointer;
+font-size:13px;
+font-weight:600;
+transition:0.2s;
+}
+
+.label-btn:hover{
+transform:translateY(-1px);
+}
+
+.label-btn.active{
+background:#ffcc00;
+}
+
+/* ADDRESS CARD APPEAR ANIMATION */
+
+.address-card{
+background:#fff9e6;
+padding:24px;
+border-radius:18px;
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
+transition:all 0.25s ease;
+
+animation:slideCard 0.5s ease forwards;
+opacity:0;
+}
+
+/* STAGGER EFFECT */
+
+.address-card:nth-child(1){animation-delay:0.05s;}
+.address-card:nth-child(2){animation-delay:0.1s;}
+.address-card:nth-child(3){animation-delay:0.15s;}
+.address-card:nth-child(4){animation-delay:0.2s;}
+.address-card:nth-child(5){animation-delay:0.25s;}
+.address-card:nth-child(6){animation-delay:0.3s;}
+
+/* KEYFRAMES */
+
+@keyframes slideCard{
+
+0%{
+transform:translateY(20px);
+opacity:0;
+}
+
+100%{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+/* DEFAULT ADDRESS GLOW */
+
+.address-card h3:has(+ button),
+.address-card h3:has(span){
+position:relative;
+}
+
+.address-card h3:has(+ button){
+}
+
+.address-card h3:contains("⭐"){
+color:#b88600;
+}
+
+.address-card:has(h3:contains("⭐")){
+border:2px solid #ffd633;
+box-shadow:0 0 10px rgba(255,204,0,0.6);
+}
+
+/* DELETE ANIMATION */
+
+.address-card.removing{
+animation:deleteCard 0.35s forwards;
+}
+
+@keyframes deleteCard{
+
+0%{
+opacity:1;
+transform:scale(1);
+}
+
+100%{
+opacity:0;
+transform:scale(0.9) translateX(40px);
+}
+
+}
+
+/* MAP MARKER PULSE */
+
+.marker-pulse{
+position:absolute;
+width:20px;
+height:20px;
+background:#ffcc00;
+border-radius:50%;
+animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(1);
+opacity:0.9;
+}
+
+70%{
+transform:scale(2.5);
+opacity:0;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+.distance{
+font-size:13px;
+color:#7a5600;
+margin-top:4px;
+opacity:0.8;
+}
+
+.left-panel,
+.right-panel{
+scroll-behavior:smooth;
 }
