@@ -214,25 +214,59 @@ function toggleNight() {
 </div>
 
 <script>
+
 function toggleChat() {
   const chat = document.getElementById("aiChat");
   chat.style.display = chat.style.display === "flex" ? "none" : "flex";
 }
 
-function sendMessage() {
+async function sendMessage() {
   const input = document.getElementById("aiInput");
+  const messages = document.getElementById("aiMessages");
   const msg = input.value.trim();
+  
   if (!msg) return;
 
-  const messages = document.getElementById("aiMessages");
-
+  // 1. Show User Message
   const userDiv = document.createElement("div");
   userDiv.className = "ai-user";
   userDiv.textContent = msg;
   messages.appendChild(userDiv);
+  
+  input.value = ""; // Clear input
+  messages.scrollTop = messages.scrollHeight;
 
-  input.value = "";
+  // 2. Show Loading State
+  const botDiv = document.createElement("div");
+  botDiv.className = "ai-bot";
+  botDiv.textContent = "...";
+  messages.appendChild(botDiv);
 
+  try {
+    // 3. Call Backend
+    const response = await fetch("http://localhost:5000/api/ai/chat", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token") 
+      },
+      body: JSON.stringify({ message: msg })
+    });
+
+    const data = await response.json();
+    botDiv.textContent = data.reply;
+    
+  } catch (error) {
+    botDiv.textContent = "Oops! My connection is a bit stale. Try again? 🥖";
+  }
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Allow "Enter" key to send message
+document.getElementById("aiInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
   setTimeout(() => {
     const botDiv = document.createElement("div");
     botDiv.className = "ai-bot";
@@ -240,7 +274,6 @@ function sendMessage() {
     messages.appendChild(botDiv);
     messages.scrollTop = messages.scrollHeight;
   }, 700);
-}
 </script>
 
 <script>
