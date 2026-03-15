@@ -10,6 +10,45 @@
 </head>
 
 <body>
+
+     <<div class="food-bg">
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+<span>🍕</span>
+<span>🍔</span>
+<span>🍟</span>
+<span>🍜</span>
+<span>🍩</span>
+<span>🍪</span>
+<span>🍣</span>
+<span>🍗</span>
+<span>🍞</span>
+<span>🥐</span>
+
+</div>
+
+
     <div class="bg-pattern"></div>
     <div id="confetti-container"></div>
 
@@ -19,6 +58,8 @@
 
         <form onsubmit="postFood(event)">
             <div class="form-grid">
+
+                <!-- LEFT CARD -->
                 <div class="form-card">
                     <div class="field">
                         <label>🍽️ Food Name</label>
@@ -69,15 +110,17 @@
                         <label>💰 Price</label>
                         <input type="text" placeholder="Enter the price" required>
                     </div>
-                </div>
 
-                <div class="form-card">
+                    <!-- MOVED CONTACT SECTION -->
                     <div class="field">
                         <label>📞 Contact Number</label>
                         <input type="tel" placeholder="Enter contact number" pattern="[0-9]{10}" required>
                         <small class="hint">Enter a valid 10 digit phone number</small>
                     </div>
+                </div>
 
+                <!-- RIGHT CARD -->
+                <div class="form-card">
                     <div class="field">
                         <label>📍 Pickup Location</label>
                         <button type="button" class="loc-btn" onclick="getLocation()">
@@ -96,6 +139,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <button type="submit" class="post-btn">
@@ -245,7 +289,9 @@
             }, 1000);
         }
     </script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfakHLx6LMr19kFFph2n80qsu773OeRQA&callback=initMap" async defer></script>
+
     <script>
         if (localStorage.getItem("nightMode") === "true") {
             document.body.classList.add("dark");
