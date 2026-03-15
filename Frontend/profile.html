@@ -20,10 +20,6 @@
 <span>🍱</span>
 <span>🍞</span>
 
-</div>
-
-<button class="back-btn" onclick="goHome()">⬅️ Back</button>
-
 <div class="profile-wrapper">
 <div class="profile-card">
 
@@ -103,13 +99,43 @@
 
 </div>
 
+</div>
+
 <button class="save-btn">Save Changes</button>
 
 <p id="profileMessage"></p>
 
 </div>
 </div>
+</div>
 
+<style>
+/* MY LISTINGS GRID SPECIFIC TO PROFILE */
+.listings-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-top:16px;
+}
+@media(max-width:600px){.listings-grid{grid-template-columns:1fr;}}
+
+.listing-card{
+  background:rgba(255,255,255,0.6);
+  border:1px solid rgba(255,255,255,0.4);
+  border-radius:12px;padding:12px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+.listing-card img{
+  width:60px;height:60px;
+  border-radius:8px;object-fit:cover;
+}
+.listing-info h4{
+  font-family:'Fredoka',cursive;
+  margin:0 0 4px;font-size:16px;color:#2f7a4f;
+}
+.listing-info p{
+  margin:0;font-size:12px;color:#8a5a44;
+}
+</style>
 
 <script>
 
@@ -179,6 +205,7 @@ console.log(err);
 }
 
 loadUser();
+
 
 
 /* PROFILE UPDATE */
@@ -366,6 +393,9 @@ window.location.href="home.html";
 
 }
 </script>
+
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 
 </body>
 </html>

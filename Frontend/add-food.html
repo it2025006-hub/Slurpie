@@ -11,56 +11,40 @@
 
 <body>
 
-     <<div class="food-bg">
-
-<span>🍕</span>
-<span>🍔</span>
-<span>🍟</span>
-<span>🍜</span>
-<span>🍩</span>
-<span>🍪</span>
-<span>🍣</span>
-<span>🍗</span>
-<span>🍞</span>
-<span>🥐</span>
-
-<span>🍕</span>
-<span>🍔</span>
-<span>🍟</span>
-<span>🍜</span>
-<span>🍩</span>
-<span>🍪</span>
-<span>🍣</span>
-<span>🍗</span>
-<span>🍞</span>
-<span>🥐</span>
-
-<span>🍕</span>
-<span>🍔</span>
-<span>🍟</span>
-<span>🍜</span>
-<span>🍩</span>
-<span>🍪</span>
-<span>🍣</span>
-<span>🍗</span>
-<span>🍞</span>
-<span>🥐</span>
-
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
 </div>
-
 
     <div class="bg-pattern"></div>
     <div id="confetti-container"></div>
 
-    <div class="page" id="formPage">
+    <!-- HEADER -->
+    <div class="page-header">
         <h1>🍱 ADD SURPLUS FOOD</h1>
         <p class="subtitle">Share extra food & make someone smile 😊</p>
+        <div class="step-indicator">
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+        </div>
+    </div>
+
+    <!-- FORM PAGE -->
+    <div class="page" id="formPage">
 
         <form onsubmit="postFood(event)">
             <div class="form-grid">
 
-                <!-- LEFT CARD -->
+                <!-- LEFT CARD — Food Details -->
                 <div class="form-card">
+                    <div class="card-title">🍽️ Food Details</div>
+
                     <div class="field">
                         <label>🍽️ Food Name</label>
                         <input id="foodName" type="text" placeholder="Write the name of your food" required>
@@ -89,17 +73,17 @@
 
                     <div class="field">
                         <label>📦 Quantity</label>
-                        <input type="text" placeholder="Enter food quantity" required>
+                        <input id="quantity" type="text" placeholder="Enter food quantity" required>
                     </div>
 
                     <div class="field">
                         <label>⚖️ Item Weight</label>
-                        <input type="text" placeholder="Example: 500g / 1kg" required>
+                        <input id="itemWeight" type="text" placeholder="Example: 500g / 1kg" required>
                     </div>
 
                     <div class="field">
                         <label>⏳ Expires In</label>
-                        <div style="display:flex; gap:10px;">
+                        <div class="expire-row">
                             <input id="expireDays" type="number" placeholder="Days" min="0">
                             <input id="expireHours" type="number" placeholder="Hours" min="0" max="23">
                         </div>
@@ -108,23 +92,24 @@
 
                     <div class="field">
                         <label>💰 Price</label>
-                        <input type="text" placeholder="Enter the price" required>
+                        <input id="price" type="text" placeholder="Enter the price" required>
                     </div>
 
-                    <!-- MOVED CONTACT SECTION -->
                     <div class="field">
                         <label>📞 Contact Number</label>
-                        <input type="tel" placeholder="Enter contact number" pattern="[0-9]{10}" required>
+                        <input id="contactNumber" type="tel" placeholder="Enter contact number" pattern="[0-9]{10}" required>
                         <small class="hint">Enter a valid 10 digit phone number</small>
                     </div>
                 </div>
 
-                <!-- RIGHT CARD -->
+                <!-- RIGHT CARD — Location & Image -->
                 <div class="form-card">
+                    <div class="card-title">📍 Pickup & Photo</div>
+
                     <div class="field">
                         <label>📍 Pickup Location</label>
                         <button type="button" class="loc-btn" onclick="getLocation()">
-                            Use My Location
+                            📍 Use My Location
                         </button>
                         <textarea id="addressBox" placeholder="Enter the full pickup address..." required></textarea>
                         <div id="map"></div>
@@ -133,21 +118,29 @@
 
                     <div class="field">
                         <label>📸 Add Food Picture</label>
-                        <input type="file" accept="image/*" onchange="previewImage(event)" required>
-                        <div class="image-preview">
-                            <img id="previewImg" alt="Image Preview">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <div class="upload-icon">📷</div>
+                                <div class="upload-text">
+                                    Drag & drop or <span>browse</span> to upload
+                                </div>
+                            </div>
+                            <img id="previewImg" class="upload-preview" alt="Image Preview">
+                            <input id="foodImage" type="file" accept="image/*" onchange="previewImage(event)" required>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <button type="submit" class="post-btn">
-                🚀 POST FOOD
+            <button type="submit" class="post-btn" id="postBtn">
+                <span class="btn-text">🚀 POST FOOD</span>
+                <span class="spinner"></span>
             </button>
         </form>
     </div>
 
+    <!-- SUCCESS PAGE -->
     <div class="page success" id="successPage">
         <h1>🎉 YAY! FOOD POSTED</h1>
         <p class="status">Status : <span>Available ✅</span></p>
@@ -168,14 +161,92 @@
     </div>
 
     <script>
-        function postFood(event) {
+        async function postFood(event) {
             event.preventDefault();
-            document.getElementById("formPage").style.display = "none";
-            document.getElementById("successPage").style.display = "flex";
-            showBadge();
-            startExpiryTimer();
-            launchConfetti();
-            startRedirect();
+
+            // Show loading state
+            const btn = document.getElementById("postBtn");
+            btn.classList.add("loading");
+
+            // Convert image to base64
+            let foodImageBase64 = "";
+            const fileInput = document.getElementById("foodImage");
+            if (fileInput.files[0]) {
+                foodImageBase64 = await toBase64(fileInput.files[0]);
+            }
+
+            // Get map marker coordinates
+            let lat = null;
+            let lng = null;
+            if (marker) {
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
+            }
+
+            // Collect all form data
+            const foodData = {
+                foodName: document.getElementById("foodName").value,
+                foodType: document.getElementById("foodType").value,
+                foodCategory: document.getElementById("foodCategory").value,
+                quantity: document.getElementById("quantity").value,
+                itemWeight: document.getElementById("itemWeight").value,
+                expireDays: parseInt(document.getElementById("expireDays").value) || 0,
+                expireHours: parseInt(document.getElementById("expireHours").value) || 0,
+                price: document.getElementById("price").value,
+                contactNumber: document.getElementById("contactNumber").value,
+                pickupAddress: document.getElementById("addressBox").value,
+                foodImage: foodImageBase64,
+                latitude: lat,
+                longitude: lng
+            };
+
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    alert("You must be logged in to post food.");
+                    btn.classList.remove("loading");
+                    window.location.href = "index.html";
+                    return;
+                }
+
+                const res = await fetch("http://localhost:5000/api/food/add", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(foodData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    document.getElementById("formPage").style.display = "none";
+                    document.querySelector(".page-header").style.display = "none";
+                    document.getElementById("successPage").style.display = "flex";
+                    showBadge();
+                    startExpiryTimer();
+                    launchConfetti();
+                    startRedirect();
+                } else {
+                    btn.classList.remove("loading");
+                    alert("Error: " + data.message);
+                }
+            } catch (err) {
+                btn.classList.remove("loading");
+                console.log(err);
+                alert("Could not connect to server. Make sure the backend is running.");
+            }
+        }
+
+        // Helper: convert file to base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
         }
 
         function showBadge(){
@@ -183,10 +254,10 @@
             const badge = document.getElementById("foodBadge");
             if(type === "veg"){
                 badge.innerHTML = "🟢 VEG";
-                badge.style.background = "#2ecc71";
+                badge.style.background = "linear-gradient(135deg, #2ecc71, #27ae60)";
             }else{
                 badge.innerHTML = "🔴 NON-VEG";
-                badge.style.background = "#e74c3c";
+                badge.style.background = "linear-gradient(135deg, #e74c3c, #c0392b)";
             }
         }
 
@@ -211,8 +282,10 @@
 
         function previewImage(event) {
             const img = document.getElementById("previewImg");
+            const placeholder = document.getElementById("uploadPlaceholder");
             img.src = URL.createObjectURL(event.target.files[0]);
             img.style.display = "block";
+            placeholder.style.display = "none";
         }
 
         let map, marker, geocoder;
@@ -220,7 +293,11 @@
             const defaultLocation = { lat: 22.5726, lng: 88.3639 };
             map = new google.maps.Map(document.getElementById("map"), {
                 center: defaultLocation,
-                zoom: 13
+                zoom: 13,
+                styles: [
+                    { featureType: "all", elementType: "geometry", stylers: [{ saturation: -10 }] },
+                    { featureType: "water", elementType: "geometry.fill", stylers: [{ color: "#c8e6f5" }] }
+                ]
             });
             geocoder = new google.maps.Geocoder();
             marker = new google.maps.Marker({
@@ -236,41 +313,74 @@
                 marker.setPosition(e.latLng);
                 reverseGeocode(e.latLng.lat(), e.latLng.lng());
             });
+
+            // Auto-detect live location on page load
+            autoDetectLocation();
+        }
+
+        function autoDetectLocation() {
+            if (!navigator.geolocation) return;
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const liveLocation = { lat, lng };
+                    map.setCenter(liveLocation);
+                    map.setZoom(15);
+                    marker.setPosition(liveLocation);
+                    reverseGeocode(lat, lng);
+                },
+                err => {
+                    console.log("Geolocation error:", err.message);
+                }
+            );
         }
 
         function getLocation() {
-            if (!navigator.geolocation) return;
-            navigator.geolocation.getCurrentPosition(position => {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
-                const userLocation = { lat, lng };
-                map.setCenter(userLocation);
-                map.setZoom(15);
-                marker.setPosition(userLocation);
-                reverseGeocode(lat, lng);
-            });
+            autoDetectLocation();
         }
 
         function reverseGeocode(lat, lng) {
-            const latlng = { lat: lat, lng: lng };
-            geocoder.geocode({ location: latlng }, (results, status) => {
-                if (status === "OK") {
-                    if (results[0]) {
+            // Try Google Geocoder first
+            try {
+                const latlng = { lat: lat, lng: lng };
+                geocoder.geocode({ location: latlng }, (results, status) => {
+                    if (status === "OK" && results[0]) {
                         document.getElementById("addressBox").value = results[0].formatted_address;
+                    } else {
+                        // Fallback to Nominatim (free reverse geocoding)
+                        nominatimFallback(lat, lng);
                     }
-                }
-            });
+                });
+            } catch (e) {
+                nominatimFallback(lat, lng);
+            }
+        }
+
+        // Fallback reverse geocoding using OpenStreetMap Nominatim
+        function nominatimFallback(lat, lng) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.display_name) {
+                        document.getElementById("addressBox").value = data.display_name;
+                    }
+                })
+                .catch(() => {
+                    document.getElementById("addressBox").value = `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`;
+                });
         }
 
         function launchConfetti() {
             const container = document.getElementById("confetti-container");
-            const colors = ["#ff6f61","#f7d046","#7bdff2","#b388ff","#95f9c3"];
-            for (let i = 0; i < 120; i++) {
+            const colors = ["#ff6f61","#f7d046","#7bdff2","#b388ff","#95f9c3","#ffd6a5","#2f7a4f"];
+            for (let i = 0; i < 150; i++) {
                 const confetti = document.createElement("div");
                 confetti.className = "confetti";
                 confetti.style.left = Math.random() * 100 + "vw";
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.animationDuration = 3 + Math.random() * 3 + "s";
+                confetti.style.animationDelay = Math.random() * 0.5 + "s";
                 container.appendChild(confetti);
                 setTimeout(() => confetti.remove(), 6000);
             }
@@ -291,6 +401,23 @@
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfakHLx6LMr19kFFph2n80qsu773OeRQA&callback=initMap" async defer></script>
+
+    <!-- PARALLAX FOOD EMOJI EFFECT -->
+    <script>
+        const food = document.querySelectorAll(".food-bg span");
+
+        document.addEventListener("mousemove", (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            food.forEach((emoji, index) => {
+                const speed = (index % 5 + 1) * 2;
+                const moveX = (x - 0.5) * speed * 10;
+                const moveY = (y - 0.5) * speed * 10;
+                emoji.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+    </script>
 
     <script>
         if (localStorage.getItem("nightMode") === "true") {

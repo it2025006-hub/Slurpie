@@ -14,6 +14,14 @@
 </head>
 <body>
 
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+</div>
+
 <div class="bg-pattern"></div>
 
 <div class="delivery-container">
@@ -145,56 +153,8 @@
     }, 1000);
   }
 </script>
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-<script>
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  // User message
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  // Fake AI response (for now)
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-</script>
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 <script>
 /* =========================
    DARK MODE FOLLOWER

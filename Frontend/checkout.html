@@ -52,8 +52,6 @@
 
     <!-- ORDER BUTTON -->
     <button class="order-btn" onclick="placeOrder()">🚚 ORDER FOOD</button>
-
-    <div class="back" onclick="goBack()">← Back to foods</div>
   </div>
 
   <!-- RIGHT COLUMN -->
@@ -195,6 +193,9 @@ if (localStorage.getItem("nightMode") === "true") {
   document.body.classList.add("dark");
 }
 </script>
+
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 
 </body>
 </html>

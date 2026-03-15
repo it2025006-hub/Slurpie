@@ -82,6 +82,7 @@
       <div class="menu-section">
         <button onclick="window.location.href='profile.html'">👤 Profile</button>
         <button onclick="window.location.href='saved-addresses.html'">📍 Saved Addresses</button>
+        <button onclick="window.location.href='my-listings.html'">📃 My Listings</button>
       </div>
 
       <div class="menu-section">
@@ -232,55 +233,8 @@ function toggleNight() {
 }
 </script>
 
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-
-<script>
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-</script>
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 
 <script>
 

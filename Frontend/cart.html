@@ -95,11 +95,18 @@
 </head>
 
 <body>
+
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+</div>
+
 <div class="bg-pattern"></div>
 
-<header style="text-align: center; padding: 40px 0;">
-    <h1 style="font-family: 'Fredoka';">🛒 YOUR CART</h1>
-    <p>Review your selected items 🤍</p>
+<header style="text-align: center; padding: 36px 0 16px;">
+    <h1 style="font-family: 'Fredoka'; font-size:40px; background:linear-gradient(135deg,#5a3d2b,#2f7a4f); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">🛒 YOUR CART</h1>
+    <p style="color:#8a5a44; margin-top:8px;">Review your selected items 🤍</p>
 </header>
 
 <div class="cart-wrapper">
@@ -182,6 +189,8 @@ function renderCart() {
     cartItemsDiv.innerHTML = "";
     let itemTotal = 0;
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     if (cart.length === 0) {
         cartItemsDiv.innerHTML = "<div class='white-card' style='text-align:center'>🧺 Your cart is empty</div>";
         document.getElementById("billContainer").style.display = "none";
@@ -198,10 +207,12 @@ function renderCart() {
         let itemSubtotal = item.price * item.qty;
         itemTotal += itemSubtotal;
 
+        const imgSrc = item.img && item.img !== "undefined" ? item.img : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop";
+
         const itemDiv = document.createElement("div");
         itemDiv.className = "cart-item";
         itemDiv.innerHTML = `
-            <img src="${item.img}" class="item-thumb" onerror="this.src='https://cdn-icons-png.flaticon.com/512/679/679927.png'">
+            <img src="${imgSrc}" class="item-thumb" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop'">
             <div>
                 <strong style="font-size:1.1rem; display:block;">${item.name}</strong>
                 <span style="color:#888; font-size:0.9rem;">₹${item.price} each</span>
@@ -343,6 +354,9 @@ function proceedPickup() {
 
 renderCart();
 </script>
+
+<!-- INJECT GLOBAL CHATBOT AND BACK BUTTON -->
+<script src="global-ui.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Listings | Slurpie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500;600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="available-foods.css">
+  <link rel="stylesheet" href="dark.css">
+</head>
+<body>
+
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+</div>
+
+<div class="bg-pattern"></div>
+
+<header>
+  <h1>📋 YOUR SURPLUS FOOD LISTINGS</h1>
+  <p>Track the generous food you’ve shared with the world 🤍</p>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <input type="text" id="searchInput" placeholder="🔍 Search your food..." onkeyup="searchFood()">
+  <button id="vegToggle" class="veg-btn fancy-veg" onclick="toggleVeg()">
+    🟢 PURE VEG <span class="status">OFF</span>
+  </button>
+</div>
+
+<section class="food-scroll">
+<div class="food-grid" id="foodGrid">
+  <div style="text-align:center; grid-column:1/-1; color:#8a5a44;">
+    <p>Loading your listings...</p>
+  </div>
+</div>
+</section>
+
+<!-- TOAST -->
+<div id="toast" class="toast">✅ Action Successful</div>
+
+<script>
+let allFoods = [];
+
+/* FETCH DATA: MY FOODS */
+async function fetchFoods() {
+  try {
+    const token = localStorage.getItem("token");
+    if(!token) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    const res = await fetch("http://localhost:5000/api/food/my", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+
+    if(!res.ok) {
+      throw new Error("Failed to fetch");
+    }
+
+    const foods = await res.json();
+    allFoods = foods;
+    renderFoods();
+
+  } catch (err) {
+    console.error("Error fetching my foods:", err);
+    document.getElementById("foodGrid").innerHTML = `
+      <div style="text-align:center; grid-column:1/-1; color:#c0392b;">
+        <p>Failed to load listings. Please ensure the backend is running.</p>
+      </div>`;
+  }
+}
+
+/* RENDER FOODS */
+function renderFoods() {
+  const container = document.getElementById("foodGrid");
+  container.innerHTML = "";
+
+  if (allFoods.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; grid-column:1/-1; color:#8a5a44;">
+        <p>You haven't posted any food yet 🍞</p>
+      </div>`;
+    return;
+  }
+
+  allFoods.forEach((food, index) => {
+    const isVeg = food.foodType.toLowerCase() === "veg";
+    const vegBadgeClass = isVeg ? "badge veg" : "badge nonveg";
+    const vegBadgeText = isVeg ? "VEG" : "NON-VEG";
+    const vegDataAttr = isVeg ? "yes" : "no";
+    
+    const imageSrc = food.foodImage || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop";
+    const delay = (index * 0.05).toFixed(2);
+    const locationHTML = `<p>📍 ${food.pickupAddress.substring(0,30)}...</p>`;
+
+    const cardHTML = `
+      <div class="food-card" data-veg="${vegDataAttr}" data-name="${food.foodName.toLowerCase()}" onclick="expandCard(this)" style="animation-delay: ${delay}s">
+        <div class="card-top">
+          <h2>🍽️ ${food.foodName} <span class="${vegBadgeClass}">${vegBadgeText}</span></h2>
+          <span class="price">₹${food.price}</span>
+        </div>
+        <img src="${imageSrc}" alt="${food.foodName}">
+        <div class="details">
+          <p>⚖️ ${food.itemWeight}</p>
+          <p>⏳ ${food.expireDays > 0 ? food.expireDays + ' days' : ''} ${food.expireHours > 0 ? food.expireHours + ' hrs' : ''}</p>
+          ${locationHTML}
+        </div>
+      </div>
+    `;
+    container.innerHTML += cardHTML;
+  });
+  
+  applyFilters();
+}
+
+fetchFoods();
+
+function expandCard(card){
+  document.querySelectorAll('.food-card').forEach(c=>c.classList.remove('active'));
+  card.classList.toggle('active');
+}
+
+let vegOnly = false;
+let searchQuery = "";
+
+function toggleVeg(){
+  vegOnly = !vegOnly;
+  document.getElementById("vegToggle").classList.toggle("active", vegOnly);
+  document.querySelector('.status').textContent = vegOnly ? "ON" : "OFF";
+  applyFilters();
+}
+
+function searchFood(){
+  searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  applyFilters();
+}
+
+function applyFilters() {
+  document.querySelectorAll('.food-card').forEach(card => {
+    const matchesName = card.dataset.name.includes(searchQuery);
+    const matchesVeg = !vegOnly || card.dataset.veg === "yes";
+    if (matchesName && matchesVeg) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+</script>
+
+<script src="global-ui.js"></script>
+
+</body>
+</html>
