@@ -12,6 +12,16 @@
 </head>
 <body>
 
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+</div>
+
   <div class="bg-pattern"></div>
 
   <div class="auth-page">
@@ -60,34 +70,11 @@
 
   </div>
 
-  <!-- AI CHAT BUTTON -->
-  <div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-  <!-- AI CHATBOX -->
-  <div id="aiChat" class="ai-chatbox">
-    <div class="ai-header">
-      🤍 Slurpie Assistant
-      <span onclick="toggleChat()">✖</span>
-    </div>
-
-    <div id="aiMessages" class="ai-messages">
-      <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-    </div>
-
-    <div class="ai-input">
-      <input type="text" id="aiInput" placeholder="Ask me anything...">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
 <script>
-
 const API = "http://localhost:5000/api/auth";
 
 /* SIGNUP */
-
 document.getElementById("signupForm").addEventListener("submit", async function(e){
-
   e.preventDefault();
 
   const name = document.getElementById("signupName").value;
@@ -96,7 +83,6 @@ document.getElementById("signupForm").addEventListener("submit", async function(
   const password = document.getElementById("signupPassword").value;
 
   try {
-
     const res = await fetch(`${API}/signup`,{
       method:"POST",
       headers:{
@@ -122,21 +108,16 @@ document.getElementById("signupForm").addEventListener("submit", async function(
     console.error(err);
     alert("Server error");
   }
-
 });
 
-
 /* LOGIN */
-
 document.getElementById("loginForm").addEventListener("submit", async function(e){
-
   e.preventDefault();
 
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
   try {
-
     const res = await fetch(`${API}/login`,{
       method:"POST",
       headers:{
@@ -151,10 +132,8 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     const data = await res.json();
 
     if(res.ok){
-
       localStorage.setItem("token",data.token);
       window.location.href="home.html";
-
     }else{
       alert(data.message || "Wrong email or password");
     }
@@ -163,39 +142,11 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     console.error(err);
     alert("Server error");
   }
-
 });
-
-
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-
 </script>
+
+<!-- INJECT GLOBAL CHATBOT AND BACK BUTTON -->
+<script src="global-ui.js"></script>
 
 </body>
 </html>

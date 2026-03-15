@@ -14,6 +14,16 @@
 </head>
 <body>
 
+<!-- FLOATING FOOD EMOJI BACKGROUND -->
+<div class="food-bg">
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🍜</span><span>🍩</span>
+<span>🍪</span><span>🍣</span><span>🍗</span><span>🍞</span><span>🥐</span>
+</div>
+
 <div class="bg-pattern"></div>
 
 <!-- GO TO CART -->
@@ -35,149 +45,10 @@
 </div>
 
 <section class="food-scroll">
-<div class="food-grid">
-
-<!-- Plum Cake -->
-<div class="food-card" data-veg="no" data-name="plum cake" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍰 Plum Cake <span class="badge nonveg">NON-VEG</span></h2>
-    <span class="price">₹70</span>
+<div class="food-grid" id="foodGrid">
+  <div style="text-align:center; grid-column:1/-1; color:#8a5a44;">
+    <p>Loading delicious foods...</p>
   </div>
-  <img src="plum-cake.png">
-  <div class="details">
-    <p>⚖️ 150 gms</p><p>🏪 Slurpie</p><p>⏳ 10 days</p><p>📍 1.0 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Plum Cake',70)">➕ ADD TO CART</button>
-</div>
-
-<!-- Biscuit -->
-<div class="food-card" data-veg="yes" data-name="biscuit" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍪 Biscuit <span class="badge veg">VEG</span></h2>
-    <span class="price">₹13</span>
-  </div>
-  <img src="biscuit.png">
-  <div class="details">
-    <p>⚖️ 30 gms</p><p>🏪 Slurpie</p><p>⏳ 18 days</p><p>📍 4.7 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Biscuit',13)">➕ ADD TO CART</button>
-</div>
-
-<!-- Mango Juice -->
-<div class="food-card" data-veg="yes" data-name="mango juice" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🥭 Mango Juice <span class="badge veg">VEG</span></h2>
-    <span class="price">₹50</span>
-  </div>
-  <img src="mango-juice.png">
-  <div class="details">
-    <p>⚖️ 1 L</p><p>🏪 Slurpie</p><p>⏳ 16 days</p><p>📍 0.4 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Mango Juice',50)">➕ ADD TO CART</button>
-</div>
-
-<!-- Diet Coke -->
-<div class="food-card" data-veg="yes" data-name="diet coke" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🥤 Diet Coke <span class="badge veg">VEG</span></h2>
-    <span class="price">₹25</span>
-  </div>
-  <img src="diet-coke.png">
-  <div class="details">
-    <p>⚖️ 200 ml</p><p>🏪 Slurpie</p><p>⏳ 50 days</p><p>📍 1.5 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Diet Coke',25)">➕ ADD TO CART</button>
-</div>
-
-<!-- Mountain Dew -->
-<div class="food-card" data-veg="yes" data-name="mountain dew" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🥤 Mountain Dew <span class="badge veg">VEG</span></h2>
-    <span class="price">₹60</span>
-  </div>
-  <img src="mountain-dew.png">
-  <div class="details">
-    <p>⚖️ 1 L</p><p>🏪 Slurpie</p><p>⏳ 45 days</p><p>📍 1.2 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Mountain Dew',60)">➕ ADD TO CART</button>
-</div>
-
-<!-- Bhujiya -->
-<div class="food-card" data-veg="yes" data-name="bhujiya" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍜 Bhujiya <span class="badge veg">VEG</span></h2>
-    <span class="price">₹46</span>
-  </div>
-  <img src="bhujiya.png">
-  <div class="details">
-    <p>⚖️ 200 gms</p><p>🏪 Slurpie</p><p>⏳ 46 days</p><p>📍 4.5 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Bhujiya',46)">➕ ADD TO CART</button>
-</div>
-
-<!-- Frozen Dessert -->
-<div class="food-card" data-veg="no" data-name="frozen dessert" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍨 Frozen Dessert <span class="badge nonveg">NON-VEG</span></h2>
-    <span class="price">₹55</span>
-  </div>
-  <img src="frozen-dessert.png">
-  <div class="details">
-    <p>⚖️ 200 gms</p><p>🏪 Slurpie</p><p>⏳ 23 days</p><p>📍 3.4 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Frozen Dessert',55)">➕ ADD TO CART</button>
-</div>
-
-<!-- Nutella -->
-<div class="food-card" data-veg="no" data-name="nutella" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍫 Nutella <span class="badge nonveg">NON-VEG</span></h2>
-    <span class="price">₹150</span>
-  </div>
-  <img src="nutella.png">
-  <div class="details">
-    <p>⚖️ 350 gms</p><p>🏪 Slurpie</p><p>⏳ 98 days</p><p>📍 2.9 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Nutella',150)">➕ ADD TO CART</button>
-</div>
-
-<!-- Peanut Butter -->
-<div class="food-card" data-veg="yes" data-name="peanut butter" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🥜 Peanut Butter <span class="badge veg">VEG</span></h2>
-    <span class="price">₹100</span>
-  </div>
-  <img src="peanut-butter.png">
-  <div class="details">
-    <p>⚖️ 300 gms</p><p>🏪 Slurpie</p><p>⏳ 67 days</p><p>📍 2.7 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Peanut Butter',100)">➕ ADD TO CART</button>
-</div>
-  <!-- Frozen Pizza -->
-<div class="food-card" data-veg="no" data-name="frozen pizza" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🍕 Frozen Pizza(Chicken) <span class="badge nonveg">NON-VEG</span></h2>
-    <span class="price">₹80</span>
-  </div>
-  <img src="frozen-pizza.png">
-  <div class="details">
-    <p>⚖️ 300 gms</p><p>🏪 Slurpie</p><p>⏳ 5 days</p><p>📍 1.4 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Frozen Pizza',80)">➕ ADD TO CART</button>
-</div>
-   <!-- Coca Cola -->
-<div class="food-card" data-veg="yes" data-name="coca cola" onclick="expandCard(this)">
-  <div class="card-top">
-    <h2>🥤 Coca Cola <span class="badge veg">VEG</span></h2>
-    <span class="price">₹50</span>
-  </div>
-  <img src="coca-cola.png">
-  <div class="details">
-    <p>⚖️ 1 L</p><p>🏪 Slurpie</p><p>⏳ 29 days</p><p>📍 1.1 km</p>
-  </div>
-  <button class="cart-add-btn" onclick="addToCart(event,'Coca Cola',50)">➕ ADD TO CART</button>
-</div>
-
 </div>
 </section>
 
@@ -185,8 +56,119 @@
 <div id="toast" class="toast">✅ Added to cart</div>
 
 <script>
+let allFoods = [];
+let userLat = null;
+let userLng = null;
+
+/* HAVERSINE FORMULA */
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  if(!lat1 || !lon1 || !lat2 || !lon2) return null;
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return (R * c).toFixed(1);
+}
+
+/* FETCH DATA: ADDRESS THEN FOODS */
+async function fetchFoods() {
+  try {
+    const token = localStorage.getItem("token");
+    
+    // 1. Try fetching user's default address first
+    if(token){
+      try{
+        const addrRes = await fetch("http://localhost:5000/api/address/my",{
+          headers: {"Authorization": "Bearer " + token}
+        });
+        if(addrRes.ok){
+          const addresses = await addrRes.json();
+          const defAddr = addresses.find(a => a.defaultAddress === true);
+          if(defAddr && defAddr.latitude && defAddr.longitude){
+            userLat = defAddr.latitude;
+            userLng = defAddr.longitude;
+          }
+        }
+      }catch(err){ console.log("Address fetch failed", err); }
+    }
+
+    // 2. Fetch all available foods
+    const res = await fetch("http://localhost:5000/api/food/all");
+    const foods = await res.json();
+    allFoods = foods;
+    renderFoods();
+  } catch (err) {
+    console.error("Error fetching foods:", err);
+    document.getElementById("foodGrid").innerHTML = `
+      <div style="text-align:center; grid-column:1/-1; color:#c0392b;">
+        <p>Failed to load foods. Please ensure the backend is running.</p>
+      </div>`;
+  }
+}
+
+/* RENDER FOODS */
+function renderFoods() {
+  const container = document.getElementById("foodGrid");
+  container.innerHTML = "";
+
+  if (allFoods.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; grid-column:1/-1; color:#8a5a44;">
+        <p>No foods available right now. Check back later! 🍽️</p>
+      </div>`;
+    return;
+  }
+
+  allFoods.forEach((food, index) => {
+    // Determine if veg or non-veg based on foodType from DB
+    const isVeg = food.foodType.toLowerCase() === "veg";
+    const vegBadgeClass = isVeg ? "badge veg" : "badge nonveg";
+    const vegBadgeText = isVeg ? "VEG" : "NON-VEG";
+    const vegDataAttr = isVeg ? "yes" : "no";
+    
+    // Set fallback image if none provided
+    const imageSrc = food.foodImage || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop";
+
+    // Format animation delay
+    const delay = (index * 0.05).toFixed(2);
+
+    // Calculate distance if coordinates exist
+    let locationHTML = `<p>📍 ${food.pickupAddress.substring(0,20)}...</p>`;
+    if (userLat && userLng && food.latitude && food.longitude) {
+      const dist = calculateDistance(userLat, userLng, food.latitude, food.longitude);
+      if (dist) locationHTML = `<p style="color:#2f7a4f; font-weight:600;">📍 ${dist} km away</p>`;
+    }
+
+    const cardHTML = `
+      <div class="food-card" data-veg="${vegDataAttr}" data-name="${food.foodName.toLowerCase()}" onclick="expandCard(this)" style="animation-delay: ${delay}s">
+        <div class="card-top">
+          <h2>🍽️ ${food.foodName} <span class="${vegBadgeClass}">${vegBadgeText}</span></h2>
+          <span class="price">₹${food.price}</span>
+        </div>
+        <img src="${imageSrc}" alt="${food.foodName}">
+        <div class="details">
+          <p>⚖️ ${food.itemWeight}</p>
+          <p>⏳ ${food.expireDays > 0 ? food.expireDays + ' days' : ''} ${food.expireHours > 0 ? food.expireHours + ' hrs' : ''}</p>
+          ${locationHTML}
+        </div>
+        <button class="cart-add-btn" onclick="addToCart(event, '${food.foodName.replace(/'/g, "\\'")}', ${food.price}, '${imageSrc}')">➕ ADD TO CART</button>
+      </div>
+    `;
+    container.innerHTML += cardHTML;
+  });
+  
+  // Apply current filters after rendering
+  applyFilters();
+}
+
+// Call fetch on load
+fetchFoods();
+
 /* CLEAR CART ON REFRESH */
-localStorage.removeItem("cart");
+// localStorage.removeItem("cart"); // Commented out so cart persists
 
 /* CARD EXPAND */
 function expandCard(card){
@@ -194,30 +176,45 @@ function expandCard(card){
   card.classList.toggle('active');
 }
 
-/* VEG FILTER */
-let vegOnly=false;
+/* VEG FILTER & SEARCH LOGIC */
+let vegOnly = false;
+let searchQuery = "";
+
 function toggleVeg(){
-  vegOnly=!vegOnly;
+  vegOnly = !vegOnly;
   document.getElementById("vegToggle").classList.toggle("active", vegOnly);
-  document.querySelector('.status').textContent=vegOnly?"ON":"OFF";
-  document.querySelectorAll('.food-card').forEach(c=>{
-    c.style.display=(!vegOnly||c.dataset.veg==="yes")?"block":"none";
-  });
+  document.querySelector('.status').textContent = vegOnly ? "ON" : "OFF";
+  applyFilters();
 }
 
-/* SEARCH */
 function searchFood(){
-  const v=document.getElementById('searchInput').value.toLowerCase();
-  document.querySelectorAll('.food-card').forEach(c=>{
-    c.style.display=c.dataset.name.includes(v)?"block":"none";
+  searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  applyFilters();
+}
+
+function applyFilters() {
+  document.querySelectorAll('.food-card').forEach(card => {
+    const matchesName = card.dataset.name.includes(searchQuery);
+    const matchesVeg = !vegOnly || card.dataset.veg === "yes";
+    
+    if (matchesName && matchesVeg) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
   });
 }
 
 /* CART */
-function addToCart(event,name,price){
+function addToCart(event, name, price, img){
   event.stopPropagation();
   let cart=JSON.parse(localStorage.getItem("cart"))||[];
-  cart.push({name,price});
+  const existing = cart.findIndex(i => i.name === name);
+  if(existing > -1){
+      cart[existing].qty = (cart[existing].qty || 1) + 1;
+  } else {
+      cart.push({name, price, img, qty: 1});
+  }
   localStorage.setItem("cart",JSON.stringify(cart));
   updateCartCount();
   showToast();
@@ -241,56 +238,8 @@ function showToast(){
 
 updateCartCount();
 </script>
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-<script>
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  // User message
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  // Fake AI response (for now)
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent = "😊 I can help you find food, check veg items, or guide you!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-</script>
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 <script>
 /* =========================
    DARK MODE FOLLOWER

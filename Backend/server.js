@@ -6,20 +6,24 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
-const addressRoutes = require("./routes/addressRoutes");   // NEW
+const addressRoutes = require("./routes/addressRoutes");
+const foodRoutes = require("./routes/foodRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const app = express();
 
 connectDB();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 /* ROUTES */
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/address", addressRoutes);   // NEW
+app.use("/api/address", addressRoutes);
+app.use("/api/food", foodRoutes);
+app.use("/api/chat", chatRoutes);
 
 
 /* TEST ROUTE */

@@ -123,56 +123,8 @@ if (localStorage.getItem("nightMode") === "true") {
 }
 </script>
 
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 Need help with pickup?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-
-<script>
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent =
-      "😊 Pickup locations are fixed in Beleghata. Just visit and collect!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-</script>
+<!-- INJECT GLOBAL UI -->
+<script src="global-ui.js"></script>
 <div id="redirectNotice" class="redirect-notice">
   🎉 Pickup confirmed! Redirecting to Home in <span id="countdown">10</span> seconds…
 </div>
