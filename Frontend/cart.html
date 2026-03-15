@@ -1,153 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Your Cart | Slurpie</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Your Cart | Slurpie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="cart.css">
-  <link rel="stylesheet" href="darkdark.css">
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="darkdark.css">
+
+    <style>
+        /* LAYOUT & THEME */
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: #fdf5e6; min-height: 100vh; color: #333; overflow-x: hidden; }
+        
+        .cart-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 380px; 
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cart-main-content { display: flex; flex-direction: column; gap: 40px; }
+
+        /* PROGRESS BAR STYLES */
+        .progress-container {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: -20px;
+        }
+        .progress-text { font-size: 0.9rem; margin-bottom: 10px; font-weight: 500; }
+        .progress-bg { background: #eee; height: 10px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { 
+            background: #27ae60; height: 100%; width: 0%; 
+            transition: width 0.5s ease-in-out; 
+        }
+
+        /* ITEM CARDS */
+        .cart-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto; 
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .item-thumb { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; background: #f0f0f0; border: 1px solid #eee; }
+        
+        .qty-controls {
+            display: flex;
+            align-items: center; gap: 12px;
+            background: #f8f8f8; padding: 8px 15px; border-radius: 50px;
+        }
+
+        .qty-btn { background: none; border: none; cursor: pointer; font-weight: bold; font-size: 1.1rem; padding: 0 5px; color: #555; }
+
+        /* SUGGESTIONS */
+        .suggestions-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .suggestions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; margin-top: 15px; }
+
+        .suggestion-card { border: 1px solid #f0f0f0; padding: 15px; border-radius: 15px; text-align: center; transition: 0.3s; }
+        .suggestion-card:hover { transform: translateY(-5px); border-color: #27ae60; }
+        .suggestion-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+
+        /* SIDEBAR (BILL & NOTES) */
+        .cart-sidebar { position: sticky; top: 20px; height: fit-content; display: flex; flex-direction: column; gap: 20px; }
+        .white-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .bill-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: #555; }
+        .grand-total { border-top: 2px solid #f9f9f9; padding-top: 15px; font-weight: 600; font-size: 1.3rem; color: #000; }
+
+        /* COUPON STYLES */
+        .coupon-box { display: flex; gap: 10px; margin-top: 10px; }
+        .coupon-box input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+        .coupon-btn { padding: 10px 15px; background: #333; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; }
+
+        .checkout-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 1rem; transition: 0.2s; }
+        .checkout-btn:hover { opacity: 0.9; }
+
+        .bg-pattern { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; }
+
+        @media (max-width: 900px) {
+            .cart-wrapper { grid-template-columns: 1fr; }
+            .cart-sidebar { position: relative; top: 0; }
+        }
+    </style>
 </head>
 
 <body>
-
 <div class="bg-pattern"></div>
 
-<header>
-  <h1>🛒 YOUR CART</h1>
-  <p>Review your selected items 🤍</p>
+<header style="text-align: center; padding: 40px 0;">
+    <h1 style="font-family: 'Fredoka';">🛒 YOUR CART</h1>
+    <p>Review your selected items 🤍</p>
 </header>
 
-<section class="cart-section">
+<div class="cart-wrapper">
+    
+    <div class="cart-main-content">
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-text" id="progressText">Add ₹199 more for FREE delivery!</div>
+            <div class="progress-bg">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
 
-  <div id="cartItems" class="cart-items"></div>
+        <div id="cartItems"></div>
 
-  <div class="cart-summary">
-    <h2>Total: ₹<span id="totalPrice">0</span></h2>
+        <div class="suggestions-container">
+            <h3>People also bought</h3>
+            <div class="suggestions-grid">
+                <div class="suggestion-card">
+                    <img src="https://images.unsplash.com/photo-1579934101967-0c67768f51a7?q=80&w=250&auto=format&fit=crop" alt="Cheese Dip">
+                    <p style="margin:0; font-weight:500;">Cheese Dip</p>
+                    <p style="color:#27ae60; font-weight:600; margin:5px 0;">₹45</p>
+                    <button onclick="addToCart('Cheese Dip', 45, 'https://images.unsplash.com/photo-1579934101967-0c67768f51a7?q=80&w=250&auto=format&fit=crop')" 
+                            style="border: 1px solid #27ae60; background:none; color:#27ae60; padding:8px; border-radius:8px; cursor:pointer; width: 100%; font-weight: 600;">Add</button>
+                </div>
+                <div class="suggestion-card">
+                    <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=250&auto=format&fit=crop" alt="Classic Coke">
+                    <p style="margin:0; font-weight:500;">Classic Coke</p>
+                    <p style="color:#27ae60; font-weight:600; margin:5px 0;">₹40</p>
+                    <button onclick="addToCart('Classic Coke', 40, 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=250&auto=format&fit=crop')" 
+                            style="border: 1px solid #27ae60; background:none; color:#27ae60; padding:8px; border-radius:8px; cursor:pointer; width: 100%; font-weight: 600;">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- NEW BUTTONS -->
-    <button class="checkout-btn" onclick="proceedDelivery()">
-      🚚 PROCEED TO DELIVERY
-    </button>
+    <div class="cart-sidebar">
+        <div class="white-card">
+            <h3 style="margin-top:0">Apply Coupon</h3>
+            <div class="coupon-box">
+                <input type="text" id="couponInput" placeholder="Enter code (SLURPIE20)">
+                <button class="coupon-btn" onclick="applyCoupon()">Apply</button>
+            </div>
+            <p id="couponMsg" style="font-size: 0.8rem; margin-top: 10px; display: none;"></p>
+        </div>
 
-    <button class="checkout-btn pickup-btn" onclick="proceedPickup()">
-      🏃 PROCEED TO SELF PICKUP
-    </button>
-  </div>
+        <div class="white-card">
+            <h3 style="margin-top:0">Delivery Instructions</h3>
+            <textarea id="deliveryNote" placeholder="e.g. Please leave with security..." style="width:100%; height:80px; border:1px solid #eee; border-radius:12px; padding:10px; resize:none; font-family:inherit;"></textarea>
+            <label style="display:flex; align-items:center; gap:10px; margin-top:15px; cursor:pointer; font-size: 0.9rem;">
+                <input type="checkbox" id="giftWrap" onchange="renderCart()"> 🎁 Add Gift Wrap (+₹15)
+            </label>
+        </div>
 
-</section>
+        <div class="white-card" id="billContainer">
+            <h3 style="margin-top:0">Bill Details</h3>
+            <div class="bill-row"><span>Items Total</span><span id="itemsTotal">₹0</span></div>
+            <div class="bill-row"><span>Delivery Fee</span><span id="deliveryCharge">₹0</span></div>
+            <div class="bill-row"><span>Handling Charge</span><span>₹5</span></div>
+            <div class="bill-row" id="giftRow" style="display:none;"><span>Gift Packaging</span><span>₹15</span></div>
+            <div class="bill-row" id="discountRow" style="display:none; color: #27ae60;">
+                <span>Coupon Discount</span><span id="discountVal">-₹0</span>
+            </div>
+            <div class="bill-row grand-total"><strong>Grand Total</strong><strong id="grandTotal">₹0</strong></div>
+            
+            <button class="checkout-btn" style="background:#27ae60; color:white; margin-top:20px;" onclick="proceedDelivery()">🚚 PROCEED TO DELIVERY</button>
+            <button class="checkout-btn" style="background:#f0f0f0; color:#333;" onclick="proceedPickup()">🏃 SELF PICKUP</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+let discount = 0;
+let hasCelebrated = false; // Flag to track if we've fired confetti for the current 199 threshold
 const cartItemsDiv = document.getElementById("cartItems");
-const totalPriceSpan = document.getElementById("totalPrice");
 
 function renderCart() {
-  cartItemsDiv.innerHTML = "";
-  let total = 0;
+    cartItemsDiv.innerHTML = "";
+    let itemTotal = 0;
 
-  if (cart.length === 0) {
-    cartItemsDiv.innerHTML = "<p class='empty'>🧺 Your cart is empty</p>";
-    totalPriceSpan.textContent = "0";
-    return;
-  }
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = "<div class='white-card' style='text-align:center'>🧺 Your cart is empty</div>";
+        document.getElementById("billContainer").style.display = "none";
+        document.getElementById("progressContainer").style.display = "none";
+        hasCelebrated = false; // Reset if cart is cleared
+        return;
+    } else {
+        document.getElementById("billContainer").style.display = "block";
+        document.getElementById("progressContainer").style.display = "block";
+    }
 
-  cart.forEach((item, index) => {
-    total += item.price;
+    cart.forEach((item, index) => {
+        if (!item.qty) item.qty = 1; 
+        let itemSubtotal = item.price * item.qty;
+        itemTotal += itemSubtotal;
 
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "cart-item";
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+            <img src="${item.img}" class="item-thumb" onerror="this.src='https://cdn-icons-png.flaticon.com/512/679/679927.png'">
+            <div>
+                <strong style="font-size:1.1rem; display:block;">${item.name}</strong>
+                <span style="color:#888; font-size:0.9rem;">₹${item.price} each</span>
+            </div>
+            <div class="qty-controls">
+                <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                <span style="font-weight:600;">${item.qty}</span>
+                <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+            </div>
+            <div style="text-align: right; min-width: 80px;">
+                <strong style="font-size:1.1rem;">₹${itemSubtotal}</strong>
+                <div onclick="removeItem(${index})" style="cursor:pointer; font-size: 12px; color: #ff4757; margin-top:5px;">Remove</div>
+            </div>
+        `;
+        cartItemsDiv.appendChild(itemDiv);
+    });
 
-    itemDiv.innerHTML = `
-      <span>${item.name}</span>
-      <span>₹${item.price}</span>
-      <button onclick="removeItem(${index})">❌</button>
-    `;
+    updateProgressBar(itemTotal);
+    calculateBill(itemTotal);
+}
 
-    cartItemsDiv.appendChild(itemDiv);
-  });
+function updateProgressBar(total) {
+    const target = 199;
+    const fill = document.getElementById("progressFill");
+    const text = document.getElementById("progressText");
+    
+    let percentage = (total / target) * 100;
+    if (percentage > 100) percentage = 100;
+    
+    fill.style.width = percentage + "%";
+    
+    if (total >= target) {
+        text.innerHTML = "🎉 Congrats! You've unlocked <b>FREE delivery</b>!";
+        text.style.color = "#27ae60";
+        
+        // Trigger confetti only once when crossing the threshold
+        if (!hasCelebrated) {
+            triggerCelebration();
+            hasCelebrated = true;
+        }
+    } else {
+        text.innerHTML = `Add <b>₹${target - total}</b> more for FREE delivery!`;
+        text.style.color = "#333";
+        hasCelebrated = false; // Reset if they go back below 199
+    }
+}
 
-  totalPriceSpan.textContent = total;
+function triggerCelebration() {
+    var count = 200;
+    var defaults = {
+        origin: { y: 0.7 }
+    };
+
+    function fire(particleRatio, opts) {
+        confetti({
+            ...defaults,
+            ...opts,
+            particleCount: Math.floor(count * particleRatio)
+        });
+    }
+
+    fire(0.25, { spread: 26, startVelocity: 55 });
+    fire(0.2, { spread: 60 });
+    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+    fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+function applyCoupon() {
+    const input = document.getElementById("couponInput").value.trim().toUpperCase();
+    const msg = document.getElementById("couponMsg");
+    
+    if (input === "SLURPIE20") {
+        discount = 20;
+        msg.textContent = "Coupon Applied! ₹20 off";
+        msg.style.color = "#27ae60";
+    } else {
+        discount = 0;
+        msg.textContent = "Invalid Coupon Code";
+        msg.style.color = "#ff4757";
+    }
+    msg.style.display = "block";
+    renderCart();
+}
+
+function addToCart(name, price, img) {
+    const existingItemIndex = cart.findIndex(item => item.name === name);
+    if (existingItemIndex > -1) {
+        cart[existingItemIndex].qty += 1;
+    } else {
+        cart.push({ name: name, price: price, qty: 1, img: img });
+    }
+    renderCart();
+}
+
+function calculateBill(itemTotal) {
+    const handlingCharge = 5;
+    const isGiftWrapped = document.getElementById("giftWrap").checked;
+    const giftCharge = isGiftWrapped ? 15 : 0;
+    let deliveryCharge = (itemTotal >= 199) ? 0 : 10;
+    
+    const discountRow = document.getElementById("discountRow");
+    if (discount > 0) {
+        discountRow.style.display = "flex";
+        document.getElementById("discountVal").innerText = `-₹${discount}`;
+    } else {
+        discountRow.style.display = "none";
+    }
+
+    const total = itemTotal + deliveryCharge + handlingCharge + giftCharge - discount;
+
+    document.getElementById("itemsTotal").innerText = `₹${itemTotal}`;
+    document.getElementById("deliveryCharge").innerText = deliveryCharge === 0 ? "FREE" : `₹${deliveryCharge}`;
+    document.getElementById("giftRow").style.display = isGiftWrapped ? "flex" : "none";
+    document.getElementById("grandTotal").innerText = `₹${Math.max(0, total)}`;
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function updateQty(index, change) {
+    cart[index].qty += change;
+    if (cart[index].qty < 1) removeItem(index);
+    else renderCart();
 }
 
 function removeItem(index) {
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+    cart.splice(index, 1);
+    renderCart();
 }
 
-/* NEW FLOWS */
 function proceedDelivery() {
-  window.location.href = "checkout.html";
+    localStorage.setItem("deliveryNote", document.getElementById("deliveryNote").value);
+    window.location.href = "checkout.html";
 }
 
 function proceedPickup() {
-  window.location.href = "pickup.html";
+    window.location.href = "pickup.html";
 }
 
 renderCart();
-</script>
-
-<!-- AI CHAT BUTTON -->
-<div class="ai-chat-btn" onclick="toggleChat()">🤖</div>
-
-<!-- AI CHATBOX -->
-<div id="aiChat" class="ai-chatbox">
-  <div class="ai-header">
-    🤍 Slurpie Assistant
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="aiMessages" class="ai-messages">
-    <div class="ai-bot">Hi! 👋 How can I help you today?</div>
-  </div>
-
-  <div class="ai-input">
-    <input type="text" id="aiInput" placeholder="Ask me anything...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-
-<script>
-function toggleChat() {
-  const chat = document.getElementById("aiChat");
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-}
-
-function sendMessage() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const messages = document.getElementById("aiMessages");
-
-  const userDiv = document.createElement("div");
-  userDiv.className = "ai-user";
-  userDiv.textContent = msg;
-  messages.appendChild(userDiv);
-
-  input.value = "";
-
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "ai-bot";
-    botDiv.textContent =
-      "😊 You can choose delivery or self pickup from here!";
-    messages.appendChild(botDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }, 700);
-}
-</script>
-
-<script>
-/* DARK MODE FOLLOWER */
-if (localStorage.getItem("nightMode") === "true") {
-  document.body.classList.add("dark");
-}
 </script>
 
 </body>
