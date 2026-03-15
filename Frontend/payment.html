@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slurpie Payment Gateway</title>
+    <link rel="stylesheet" href="payment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="payment-container">
+        <div class="card upi-section">
+            <div class="card-header">
+                <span class="icon">📱</span>
+                <h2>Pay with UPI</h2>
+            </div>
+            <p class="subtitle">Scan QR or enter your UPI ID ✨</p>
+
+            <div class="qr-container">
+                <img src="qrcode.png" alt="UPI QR Code" class="qr-image">
+                <p class="qr-footer">Scan to pay to <strong>9339617837@upi</strong></p>
+            </div>
+
+            <div class="upi-input-area">
+                <div class="input-group">
+                    <label for="customerUpi">Enter your UPI ID *</label>
+                    <input type="text" id="customerUpi" placeholder="username@bank" required>
+                </div>
+                
+                <button type="button" class="btn primary-btn" onclick="processUPI()">
+                    Verify & Pay Now
+                </button>
+            </div>
+            
+            <p class="secure-text">🔒 Secure 256-bit encrypted payment</p>
+        </div>
+
+        <div class="card netbanking-section">
+            <div class="card-header">
+                <span class="icon">🏦</span>
+                <h2>Netbanking</h2>
+            </div>
+            <p class="subtitle">Securely login to your bank 💳</p>
+
+            <form action="#" class="payment-form" onsubmit="event.preventDefault(); alert('Redirecting to secure bank portal...');">
+                <div class="input-group">
+                    <label for="bank">Select Bank *</label>
+                    <select id="bank" name="bank" required>
+                        <option value="" disabled selected>Choose your bank...</option>
+                        <option value="sbi">State Bank of India</option>
+                        <option value="hdfc">HDFC Bank</option>
+                        <option value="icici">ICICI Bank</option>
+                        <option value="axis">Axis Bank</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="customerId">Customer ID / User ID *</label>
+                    <input type="text" id="customerId" placeholder="Enter your User ID" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn submit-btn">Login & Pay</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function processUPI() {
+            const upiId = document.getElementById('customerUpi').value;
+            if (upiId.includes('@')) {
+                alert('Request sent to ' + upiId + '. Please check your UPI app to approve the payment of Slurpie.');
+            } else {
+                alert('Please enter a valid UPI ID (e.g., name@okaxis)');
+            }
+        }
+    </script>
+</body>
+</html>

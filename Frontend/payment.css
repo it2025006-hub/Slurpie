@@ -1,0 +1,137 @@
+:root {
+    --bg-color: #fdf2d6; /* Warm yellow background */
+    --card-bg: #fffbf0;  /* Creamy card background */
+    --text-main: #4a4a4a;
+    --text-muted: #8b8b8b;
+    --input-bg: #f7eed8; /* Warmer inputs */
+    --btn-bg: #e2ede2;   /* Soft pastel green */
+    --btn-hover: #d2e4d2;
+    --btn-text: #3b5a3b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-main);
+    padding: 20px;
+}
+
+.payment-container {
+    display: flex;
+    gap: 30px;
+    max-width: 950px;
+    width: 100%;
+    flex-wrap: wrap; 
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 28px;
+    padding: 40px;
+    flex: 1;
+    min-width: 320px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f2ead0;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+h2 { font-size: 1.6rem; font-weight: 700; }
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+/* QR Area */
+.qr-container {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f0f0f0;
+}
+
+.qr-image {
+    max-width: 180px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.qr-footer {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    margin-left: 5px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid transparent;
+    background-color: var(--input-bg);
+    border-radius: 14px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #d2e4d2;
+    background-color: #fff;
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    transition: 0.3s;
+}
+
+.btn:hover { background-color: var(--btn-hover); }
+
+.secure-text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #b5b5b5;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .payment-container { flex-direction: column; }
+}
